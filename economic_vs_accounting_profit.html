@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+        
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        
+        <script type="text/javascript" src="economic_vs_accounting_profit.js"></script>
+        
+        <style>
+            .revenue {
+                fill: green;
+            }
+            .cost_to_produce{
+                fill: red;
+            }
+            .bar_label{
+                fill: white;
+            }
+                
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class='row'>Test</div>
+            <div class='row'>
+                <button type="button" id='change_graph'>Relative</button>
+            </div>
+            <div class='row'>
+                <div class='col-xs-12' id='graph_column'>
+                    <div id="graph"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
