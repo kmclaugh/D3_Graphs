@@ -16,14 +16,31 @@
         <script type="text/javascript" src="economic_vs_accounting_profit.js"></script>
         
         <style>
+            .axis path, .axis line
+            {
+                fill: none;
+                stroke: #777;
+                shape-rendering: crispEdges;
+                stroke-width: 3;
+            }
+            .a_label{
+                font-size: 13px;
+            }
             .revenue {
                 fill: green;
             }
             .cost_to_produce{
                 fill: red;
             }
-            .bar_label{
+            .oppertunity_cost{
+                fill: orange;
+            }
+            .a_bar{
                 fill: white;
+                font-weight: bold;
+            }
+            .sum_line{
+                fill: blue;
             }
                 
         </style>
@@ -35,7 +52,7 @@
                 <button type="button" id='change_graph'>Relative</button>
             </div>
             <div class='row'>
-                <div class='col-xs-12' id='graph_column'>
+                <div class='col-md-4 col-sm-6 col-xs-12' id='graph_column'>
                     <div id="graph"></div>
                 </div>
             </div>
