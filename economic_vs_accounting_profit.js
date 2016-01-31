@@ -307,7 +307,7 @@ function compare_graph_class(the_data, graph_container_id){
                 .attr("text-anchor", "middle")
                 .attr("class", "a_bar a_label")
                 .text(function(d) {
-                      return "Cost to Produce " + self.currency_format(d.Cost_to_Produce);
+                      return "Production Cost " + self.currency_format(d.Cost_to_Produce);
                 });
                 
             
