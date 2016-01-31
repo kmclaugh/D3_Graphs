@@ -2,22 +2,29 @@ $(window).load(function () {
     
     $(document).ready(function () {
         
-        var the_data = [
+        var data1 = [
             {'x': 1, 'Revenue':150, 'Cost_to_Produce':-30, "Oppertunity_Cost": -170}
+        ];
+        var data2 = [
+            {'x': 1, 'Revenue':170, 'Cost_to_Produce':-30, "Oppertunity_Cost": -140}
         ];
         
         //When the window resizes, resize the graph
         $( window ).resize(function() {
-            compare_graph.resize();
+            graph1.resize();
+            graph2.resize();
         });
         
         $('#change_graph').click(function(){
-            compare_graph.update_data();
+            graph1.update_data();
+            graph2.update_data();
         })
         
-        //Init the graph
-        var compare_graph = new compare_graph_class(the_data, 'graph');
-        compare_graph.draw();
+        //Init the graphs
+        var graph1 = new compare_graph_class(data1, 'graph1');
+        graph1.draw();
+        var graph2 = new compare_graph_class(data2, 'graph2');
+        graph2.draw();
 
     });
 });
@@ -64,9 +71,6 @@ function compare_graph_class(the_data, graph_container_id){
                     .attr("x", self.width )             
                     .attr("y", self.yRange(self.sum)-5)
                     .text("Accounting");
-                
-                //Update the graph title
-                self.graph_title.text('Accounting Profit');
             }
             
             //change to economic profit
@@ -89,7 +93,7 @@ function compare_graph_class(the_data, graph_container_id){
                 self.sum_line_text0
                     .transition()
                     .attr("y", self.yRange(self.sum)-5)
-                    .text("$"+self.sum);
+                    .text(self.currency_format(self.sum));
                 
                 self.sum_line_text1
                     .transition()
@@ -101,9 +105,6 @@ function compare_graph_class(the_data, graph_container_id){
                     .attr("x", self.width )             
                     .attr("y", self.yRange(self.sum)-5)
                     .text("Economic");
-                
-                //Update the graph title
-                self.graph_title.text('Accounting Profit');
             }
     }
     
@@ -225,14 +226,7 @@ function compare_graph_class(the_data, graph_container_id){
         //Add a layer to the svg
         self.svg_g = self.svg.append("g")
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")");
-        
-        //Add the graph title
-        self.graph_title = self.svg_g.append("text")
-            .attr("x", (self.width / 2))             
-            .attr("y", (0 - self.margin.top/2))
-            .attr("text-anchor", "middle")
-            .attr('class', 'a_label')
-            .text("Econmic Profit");
+
                     
         self.xRange = d3.scale.ordinal()
             .rangeRoundBands([0, self.width], .3)
@@ -288,7 +282,7 @@ function compare_graph_class(the_data, graph_container_id){
                 .attr("text-anchor", "middle")
                 .attr("class", "a_bar a_label")
                 .text(function(d) {
-                      return "Revenue $"+d.Revenue;
+                      return "Revenue " + self.currency_format(d.Revenue);
                 });
         
         //cost to produce
@@ -313,7 +307,7 @@ function compare_graph_class(the_data, graph_container_id){
                 .attr("text-anchor", "middle")
                 .attr("class", "a_bar a_label")
                 .text(function(d) {
-                      return "Cost to Produce $"+d.Cost_to_Produce;
+                      return "Cost to Produce " + self.currency_format(d.Cost_to_Produce);
                 });
                 
             
@@ -341,7 +335,7 @@ function compare_graph_class(the_data, graph_container_id){
                 .attr("text-anchor", "middle")
                 .attr("class", "a_bar a_label")
                 .text(function(d) {
-                      return "Oppertunity Cost $"+d.Oppertunity_Cost;
+                      return "Oppertunity Cost " + self.currency_format(d.Oppertunity_Cost);
                 });
         
         //Sum Line
@@ -363,7 +357,7 @@ function compare_graph_class(the_data, graph_container_id){
             .attr("y", self.yRange(self.sum)-5)
             .attr("text-anchor", "start")
             .attr('class', 'sum_line a_label')
-            .text("$"+self.sum);
+            .text(self.currency_format(self.sum));
         
         self.sum_line_text1 = self.svg_g.append("text")
             .attr("x", self.width )      
@@ -383,6 +377,17 @@ function compare_graph_class(the_data, graph_container_id){
     }//End draw graph
     
     /* Reusable functions********************/
+    self.currency_format = function(value){
+        /*Returns a currency formatted value for positive and negative values*/
+        if (value >= 0){
+            var formatted_value = "$" + value;
+        }
+        else{
+            var formatted_value = "-$" + Math.abs(value);
+        }
+        return(formatted_value)
+    }
+        
     self.calculate_sum_line_data = function(){
         return [{"x":20, "y":self.sum}, {"x":self.width, "y":self.sum}];
     };
