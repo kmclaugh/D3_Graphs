@@ -121,11 +121,6 @@ function compare_graph_class(the_data, graph_container_id){
         self.svg_g
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")");
         
-        //Update the graph title position
-        self.graph_title
-            .attr("x", (self.width / 2))
-            .attr("y", (0 - self.margin.top/2));
-        
         //Rescale the range and axis functions to account for the new dimensions
          self.xRange
             .rangeRoundBands([0, self.width], .3)
