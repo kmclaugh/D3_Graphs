@@ -61,6 +61,9 @@ function profits_graph_class(the_data, graph_container_id){
                 self.sum_line
                     .transition()
                     .attr("d", self.sum_line_function(self.calculate_sum_line_data()))
+                    .each('end',function(){
+                        $('.oppertunity_cost').attr('visibility', 'hidden');    
+                    });
                 
                 self.sum_line_text0
                     .transition()
@@ -77,12 +80,13 @@ function profits_graph_class(the_data, graph_container_id){
                     .attr("x", self.width )             
                     .attr("y", self.yRange(self.sum)-5)
                     .text("Accounting");
+                
             }
             
             //change to economic profit
             else if (self.current_data == 'accounting') {
                 self.current_data = 'economic';
-                
+                $('.oppertunity_cost').attr('visibility', 'visible');
                 //Make oppertunity cost zero
                 self.bar_oppertunity_cost
                     .transition()
@@ -336,6 +340,7 @@ function profits_graph_class(the_data, graph_container_id){
                 .text(function(d) {
                       return "Opportunity Cost " + self.currency_format(d.Opportunity_Cost);
                 });
+        $('.oppertunity_cost').attr('visibility', 'hidden');
         
         //Sum Line
         self.sum_line_function = d3.svg.line()
