@@ -3,10 +3,10 @@ $(window).load(function () {
     $(document).ready(function () {
         
         var data1 = [
-            {'x': 1, 'Revenue':150, 'Cost_to_Produce':-30, "Oppertunity_Cost": -170}
+            {'x': 1, 'Revenue':150, 'Cost_to_Produce':-30, "Opportunity_Cost": -170}
         ];
         var data2 = [
-            {'x': 1, 'Revenue':170, 'Cost_to_Produce':-30, "Oppertunity_Cost": -140}
+            {'x': 1, 'Revenue':170, 'Cost_to_Produce':-30, "Opportunity_Cost": -140}
         ];
         
         //When the window resizes, resize the graph
@@ -18,23 +18,29 @@ $(window).load(function () {
         $('#change_graph').click(function(){
             graph1.update_data();
             graph2.update_data();
+            if (graph1.current_data == 'accounting'){
+                $(this).html('Click to switch to Economic Profit');
+            }
+            else if (graph1.current_data == 'economic'){
+                $(this).html('Click to switch to Accounting Profit');
+            }
         })
         
         //Init the graphs
-        var graph1 = new compare_graph_class(data1, 'graph1');
+        var graph1 = new profits_graph_class(data1, 'graph1');
         graph1.draw();
-        var graph2 = new compare_graph_class(data2, 'graph2');
+        var graph2 = new profits_graph_class(data2, 'graph2');
         graph2.draw();
 
     });
 });
 
-function compare_graph_class(the_data, graph_container_id){
+function profits_graph_class(the_data, graph_container_id){
     /*Class for the compare graph*/
     
     var self = this;
     self.margin = {};
-    self.current_data = 'economic';
+    self.current_data = 'accounting';
     self.data = the_data;
     self.graph_container_id = graph_container_id
 
@@ -81,7 +87,7 @@ function compare_graph_class(the_data, graph_container_id){
                 self.bar_oppertunity_cost
                     .transition()
                     .attr("height", function(d) {
-                        return Math.abs(self.yRange(d.Oppertunity_Cost) - self.yRange(0));
+                        return Math.abs(self.yRange(d.Opportunity_Cost) - self.yRange(0));
                     });
                 
                 //Sum Line
@@ -177,13 +183,13 @@ function compare_graph_class(the_data, graph_container_id){
                 return self.yRange( Math.max(0, d.Cost_to_Produce)) + Math.abs(self.yRange(d.Cost_to_Produce)  - self.yRange(0));
             })
             .attr("height", function(d) {
-                return Math.abs(self.yRange(d.Oppertunity_Cost) - self.yRange(0));
+                return Math.abs(self.yRange(d.Opportunity_Cost) - self.yRange(0));
                 });
                 
          self.oppertunity_cost_text 
             .attr("x", function(d) { return self.xRange(d.x) + self.xRange.rangeBand()/2; })
             .attr("y", function(d) {
-                return self.yRange(Math.max(0, d.Oppertunity_Cost)) + Math.abs(self.yRange(d.Oppertunity_Cost) - self.yRange(0))/2 + 5;
+                return self.yRange(Math.max(0, d.Opportunity_Cost)) + Math.abs(self.yRange(d.Opportunity_Cost) - self.yRange(0))/2 + 5;
             });
         
         //Sum Line
@@ -316,21 +322,19 @@ function compare_graph_class(the_data, graph_container_id){
                 .attr("y", function(d) {
                     return self.yRange( Math.max(0, d.Cost_to_Produce)) + Math.abs(self.yRange(d.Cost_to_Produce)  - self.yRange(0));
                 })
-                .attr("height", function(d) {
-                    return Math.abs(self.yRange(d.Oppertunity_Cost) - self.yRange(0));
-                    });
+                .attr("height", 0);
                 
          self.oppertunity_cost_text = self.svg_g
             .data(self.data)
             .append("text")
                 .attr("x", function(d) { return self.xRange(d.x) + self.xRange.rangeBand()/2; })
                 .attr("y", function(d) {
-                    return self.yRange(Math.max(0, d.Oppertunity_Cost)) + Math.abs(self.yRange(d.Oppertunity_Cost) - self.yRange(0))/2 + 5;
+                    return self.yRange(Math.max(0, d.Opportunity_Cost)) + Math.abs(self.yRange(d.Opportunity_Cost) - self.yRange(0))/2 + 5;
                 })
                 .attr("text-anchor", "middle")
                 .attr("class", "a_bar a_label")
                 .text(function(d) {
-                      return "Oppertunity Cost " + self.currency_format(d.Oppertunity_Cost);
+                      return "Opportunity Cost " + self.currency_format(d.Opportunity_Cost);
                 });
         
         //Sum Line
@@ -351,22 +355,22 @@ function compare_graph_class(the_data, graph_container_id){
             .attr("x", 20 )          
             .attr("y", self.yRange(self.sum)-5)
             .attr("text-anchor", "start")
-            .attr('class', 'sum_line a_label')
+            .attr('class', 'sum_line ')
             .text(self.currency_format(self.sum));
         
         self.sum_line_text1 = self.svg_g.append("text")
             .attr("x", self.width )      
             .attr("y", self.yRange(self.sum)+20)
             .attr("text-anchor", "end")
-            .attr('class', 'sum_line a_label')
+            .attr('class', 'sum_line ')
             .text("Profit");
         
         self.sum_line_text2 = self.svg_g.append("text")
             .attr("x", self.width )             
             .attr("y", self.yRange(self.sum)-5)
             .attr("text-anchor", "end")
-            .attr('class', 'sum_line a_label')
-            .text("Economic");
+            .attr('class', 'sum_line ')
+            .text("Accounting");
             
     
     }//End draw graph
@@ -388,8 +392,9 @@ function compare_graph_class(the_data, graph_container_id){
     };
     
     self.calculate_sum = function(){
+        /*Calculates the sum for the sum line*/
         if (self.current_data == "economic"){
-            self.sum = self.data[0].Revenue + self.data[0].Cost_to_Produce + self.data[0].Oppertunity_Cost;
+            self.sum = self.data[0].Revenue + self.data[0].Cost_to_Produce + self.data[0].Opportunity_Cost;
         }
         else if (self.current_data == 'accounting'){
             self.sum = self.data[0].Revenue + self.data[0].Cost_to_Produce;
@@ -400,16 +405,16 @@ function compare_graph_class(the_data, graph_container_id){
         /*Resets the higheth width and margins based on the column width*/
         var graph_container_width = $('#'+self.graph_container_id).width();
         self.margin = {
-            top: 30,
+            top: 0,
             right: 0,
-            bottom: 300,
+            bottom: 0,
             left: 10
         };
         self.width = graph_container_width - self.margin.right - self.margin.left;
         if (self.width > 350){
             self.width = 350;
         }
-        self.height = 600- self.margin.top - self.margin.bottom;
+        self.height = 300- self.margin.top - self.margin.bottom;
     }
     
 }
