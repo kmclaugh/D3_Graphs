@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="vendor/bootstrap-slider.js"></script>
+        <link rel="stylesheet" href="vendor/bootstrap-slider.css">
+        
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        
+        <script type="text/javascript" src="speed_of_light.js"></script>
+        
+        <style>
+            .axis path, .axis line
+            {
+                fill: none;
+                stroke: #777;
+                shape-rendering: crispEdges;
+                stroke-width: 3;
+            }
+            .a_label{
+                font-size: 13px;
+            }
+            .revenue {
+                fill: green;
+            }
+            .cost_to_produce{
+                fill: red;
+            }
+            .oppertunity_cost{
+                fill: orange;
+            }
+            .a_bar{
+                fill: white;
+                font-weight: bold;
+            }
+            .sum_line{
+                fill: blue;
+            }
+                
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class='row'>
+                <button type="button" id='start'>Start</button>
+            </div>
+            <div class='row'>
+                <div class='col-xs-2 col-sm-1 text-center'>
+                    Mass
+                </div>
+                <div class='col-xs-10 col-sm-11 text-center'>
+                    Demo
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-xs-2 col-sm-1 text-center'>
+                    <input id="mass" class='cdf_slider' type="text" />
+                </div>
+                <div class='col-xs-10 col-sm-11' id='demo_column'>
+                    <div id="demo"></div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-xs-12' id='graph_column'>
+                    <div id="graph"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
