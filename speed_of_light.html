@@ -44,31 +44,38 @@
             .sum_line{
                 fill: blue;
             }
-                
+            .slider.slider-vertical{
+                height: 170px!important;
+            }
         </style>
     </head>
     <body>
         <div class="container">
-            <div class='row'>
-                <button type="button" id='start'>Start</button>
+            <div class='row' style="padding-top: 20px;">
+                <div class='col-xs-6 text-center'>
+                    <button class='btn btn-success' type="button" id='start'>Start</button>
+                </div>
+                <div class='col-xs-6 text-center'>
+                    <button class='btn btn-danger' type="button" id='reset'>Reset</button>
+                </div>
             </div>
             <div class='row'>
                 <div class='col-xs-2 col-sm-1 text-center'>
-                    Mass
+                    <h4></h4>
                 </div>
                 <div class='col-xs-10 col-sm-11 text-center'>
-                    Demo
+                    <h3>Effect of Mass on Velocity Demo</h3>
                 </div>
             </div>
             <div class='row'>
                 <div class='col-xs-2 col-sm-1 text-center'>
-                    <input id="mass" class='cdf_slider' type="text" />
+                    <input id="mass" class='slider' type="text" />
                 </div>
                 <div class='col-xs-10 col-sm-11' id='demo_column'>
                     <div id="demo"></div>
                 </div>
             </div>
-            <div class='row'>
+            <div class='row' style="padding-top: 20px;">
                 <div class='col-xs-12' id='graph_column'>
                     <div id="graph"></div>
                 </div>
