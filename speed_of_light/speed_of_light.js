@@ -28,7 +28,7 @@ $(window).load(function () {
                     return 'Bowlingball: 5kg';
                 }
                 else if (value == '1'){
-                    return 'Bowlingball: 1kg';
+                    return 'Basketball: 1kg';
                 }
                 else if (value == '0'){
                     return 'Light: 0kg';
