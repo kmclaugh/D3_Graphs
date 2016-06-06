@@ -1,0 +1,104 @@
+.logo{
+    float: left;
+}
+.logo img{
+    height: 50px;
+}
+.logo span{
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgb(32,32,32);
+    color: #85C285;
+    font-size: 20px;
+}
+
+.graph{
+    height: 100%;
+}
+
+.axis path, .axis line
+{
+    fill: none;
+    stroke: #777;
+    shape-rendering: crispEdges;
+}
+
+.tick
+{
+    stroke-dasharray: 1, 2;
+}
+
+.graph_column{
+    margin-left:auto;
+    margin-right: auto;
+}
+.graph_title{
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-top: 20px;
+}
+.scale_col{
+    text-align: center;
+}
+.scale{
+    margin: 0px;
+    font-weight: normal;
+}
+@media (min-width: 1px) {
+    .scale_col{
+        padding-bottom: 10px;
+    }
+    .scale{
+        font-size: 16px;
+    }
+    input.scale{
+        margin-top: 4px;
+    }
+}
+@media (min-width: 768px) {
+    .scale_col{
+        padding-bottom: 0px;
+    }
+    .scale{
+        float: left!important;
+        font-size: 14px;
+    }
+    input.scale{
+        margin-top: 3px;
+    }
+}
+.source_row{
+    text-align: center;
+    font-style: italic;
+    padding-top: 10px;
+}
+a {
+    cursor: pointer;
+}
+body {
+    padding-right: 0px !important
+}
+  
+.modal-open {
+    overflow-y: auto;
+}
+.modal-title{
+    text-align: center;
+    font-style: normal;
+}
+.modal-body{
+    text-align: left;
+    font-style: normal;
+}
+.display_source_row{
+    padding-top: 10px;
+    padding-left: 35px;
+}
+.data_tip{
+    background-color: white;
+    border: solid;
+    border-color: #D8D8D8;
+    border-width: 1px;
+    text-align: center;
+}

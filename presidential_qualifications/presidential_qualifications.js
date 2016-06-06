@@ -2,28 +2,47 @@ $(window).load(function () {
     
     $(document).ready(function () {
         
+        //Create candidate list from data
         candidate_list = [];
         for (i=0; i<candidates_data.length; i++){
             candidate_data = candidates_data[i];
-            candidate = new candidate_class(name=candidate_data.name, experience=candidate_data.experience, administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end, administration_length=candidate_data.administration_length)
+            candidate = new candidate_class(name=candidate_data.name, id=i, experience=candidate_data.experience, administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end, administration_length=candidate_data.administration_length)
             candidate.init_data();
+            candidate.calculate_experience_points(Points_per_Position);
             candidate_list.push(candidate)
         }
-        console.log(Points_per_Position);
-        console.log(candidate_list);
+        
+        candidate_list.sort(function(x, y){
+            return d3.ascending(x.administration_start, y.administration_start);
+        })
+        //HACKy to do this here
+        candidate_list.forEach(function(candidate, i){
+            candidate.id = i+1
+        });
+        
+        console.log(candidate_list)
+        
+        experience_graph = new experience_graph_class(the_data=candidate_list, graph_container_id='experience_graph', graph_title='Presidential Experience', graph_slug='Presidential_Experience');
+       experience_graph.draw();
+            
     });
 });
 
 
-function candidate_class(name, experience, administration_start, administration_end, administration_length ){
+function candidate_class(name, id, experience, administration_start, administration_end, administration_length ){
     /*Class for carrying around candidate info*/
     
     var self = this;
-    self.name = name;
+    self.Name = name;
+    self.Group = 'group1';
+    self.id = id;
+    self['Source Link'] = '';
     self.experience = experience;
     self.administration_start = moment(administration_start, "MM/DD/YYYY");
     self.administration_end = moment(administration_end, "MM/DD/YYYY");;
     self.administration_length = administration_length;
+    self.experience_points = 0;
+    self.best_qualification = {'position':'None', 'experience_points':0, 'start_date': null, 'end_date': null}
     
     self.init_data = function(){
         self.experience.forEach(function(position){
@@ -37,12 +56,18 @@ function candidate_class(name, experience, administration_start, administration_
         });
     }
     
-    self.calculate_experience_points = function(){
+    self.calculate_experience_points = function(points_per_position_dictionary){
         /*Calculates the total experience and stores it as the attribute 'experience_points'*/
-        var experience_points = 0;
+        self.experience_points = 0;
         self.experience.forEach(function(position){
-            experience_points += Points_per_Position[position['Position']] * position['experience_percentage'];
+            var position_points = points_per_position_dictionary[position['Position']] * position['experience_percentage'];
+            self.experience_points += position_points;
+            if (position_points > self.best_qualification.experience_points){
+                self.best_qualification = {'position':position['Position'], 'experience_points':position_points, 'start_date': position['Start_Date'], 'end_date': position['End_Date']}
+            }
+
         });
+    }
 }
 
 experience_curve = function(t){

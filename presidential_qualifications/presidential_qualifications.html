@@ -12,14 +12,26 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         
-        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="../vendor/d3.v3.min.js"></script>
+        <script src="../vendor/d3-tip.js"></script>
         <script src="../vendor/moment.js"></script>
+        <script src="../vendor/graphing_functions.js"></script>
+        <link rel="stylesheet" href="../vendor/graph_styles.css">
+        
+        <link rel="stylesheet" href="presidential_qualifications.css">
         <script type="text/javascript" src="data.js"></script>
+        <script type="text/javascript" src="graphs.js"></script>
         <script type="text/javascript" src="presidential_qualifications.js"></script>
         
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
+            <div class='row'>
+                <div class='col-xs-12 graph_column'>
+                    <div class="graph" id='experience_graph_controls'></div>
+                    <div class="graph" id='experience_graph'></div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

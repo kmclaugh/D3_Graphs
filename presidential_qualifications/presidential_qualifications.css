@@ -1,0 +1,110 @@
+.group1
+{
+    fill: #8A0707;
+    stroke: #8A0707;
+}
+.hover_bar{
+    fill-opacity: 0;
+    
+}
+@media (max-width : 767px) {
+    .group_label{
+        visibility: hidden;
+    }
+}
+.group_label{
+    font-size: 14px;
+    font-weight: bold;
+}
+.Average_tick{
+    font-weight: bold;
+}
+@media (min-width: 10px) {
+    .axis text{
+        font-family: 'Arial';
+        font-size: 10px;
+    }
+}
+@media (min-width: 400px) {
+    .axis text{
+        font-family: 'Arial';
+        font-size: 10px;
+    }
+}
+.source_tick{
+    fill: #337ab7;
+}
+.source_tick:hover{
+    fill: #23527c;
+    text-decoration: underline;
+}
+.tick{
+    cursor: pointer;
+}
+.change_button_row{
+    text-align: center;
+    padding-top: 10px;
+}
+.d3-tip{
+    line-height: 1;
+    background-color: white;
+    border: solid;
+    border-width: 1px;
+    padding: 5px;
+    text-align: center;
+    max-width: 300px;
+}
+.value,
+.tip_title{
+    font-weight: bold;
+}
+.source{
+    font-style: italic;
+}
+.highlight{
+    stroke-width:1;
+    stroke: black;
+    fill: #55ff00!important;
+}
+.highlight.tooltip_line{
+    stroke-width:1;
+    stroke: black;
+}
+.d3-tip:after {
+    text-align: center;
+    content:'';
+    display:block;
+    width:0;
+    height:0;
+    position:absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid black;
+    bottom:-10px;
+    left: 50%;
+    margin-left: -10px;
+}
+
+.legend.series{
+    stroke-width: 2px;
+}
+.legend_row{
+    text-align: right;
+}
+.visible_false{
+    fill: none!important;
+}
+@media (min-width: 1px) {
+    .legend_button_wrapper{
+        float: left!important;
+    }
+}
+@media (min-width: 550px) {
+    .legend_button_wrapper{
+        float: right!important;
+    }
+}
+.legend_button{
+    background-color: transparent;
+    border: hidden;
+}
