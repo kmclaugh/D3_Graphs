@@ -2,6 +2,10 @@ $(window).load(function () {
     
     $(document).ready(function () {
         
+        //Create the points table
+        var points_table = new points_table_class(the_data=Points_per_Position, graph_container_id='points_table', title_text='Points per Position', slug='Points_per_Position');
+        points_table.create();
+        
         //Create candidate list from data
         candidate_list = [];
         for (i=0; i<candidates_data.length; i++){
