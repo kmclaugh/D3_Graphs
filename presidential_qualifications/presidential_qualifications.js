@@ -6,7 +6,7 @@ $(window).load(function () {
         candidate_list = [];
         for (i=0; i<candidates_data.length; i++){
             candidate_data = candidates_data[i];
-            candidate = new candidate_class(name=candidate_data.name, id=i, experience=candidate_data.experience, administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end, administration_length=candidate_data.administration_length)
+            candidate = new candidate_class(name=candidate_data.name, id=i, group='group0', experience=candidate_data.experience, administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end, administration_length=candidate_data.administration_length)
             candidate.init_data();
             candidate.calculate_experience_points(Points_per_Position);
             candidate_list.push(candidate)
@@ -16,20 +16,22 @@ $(window).load(function () {
             return d3.ascending(x.administration_start, y.administration_start);
         })
         //HACKy to do this here
+        
         candidate_list.forEach(function(candidate, i){
-            candidate.id = i+1
+            candidate.id = i+1;
+            candidate.Group = 'group'+Math.round(i / 10) * 10;
         });
         
         console.log(candidate_list)
         
-        experience_graph = new experience_graph_class(the_data=candidate_list, graph_container_id='experience_graph', graph_title='Presidential Experience', graph_slug='Presidential_Experience');
+        experience_graph = new experience_graph_class(the_data=candidate_list, graph_container_id='experience_graph', title_text='Presidential Experience', graph_slug='Presidential_Experience');
        experience_graph.draw();
             
     });
 });
 
 
-function candidate_class(name, id, experience, administration_start, administration_end, administration_length ){
+function candidate_class(name, id, group, experience, administration_start, administration_end, administration_length ){
     /*Class for carrying around candidate info*/
     
     var self = this;

@@ -1,8 +1,25 @@
-.group1
+.group0
 {
     fill: #8A0707;
     stroke: #8A0707;
 }
+.group10{
+    fill: #000066;
+    stroke: #000066;
+}
+.group20{
+    fill: #cc9900;
+    stroke: #cc9900;
+}
+.group30{
+    fill: #660066;
+    stroke: #660066;
+}
+.group40{
+    fill: #446600;
+    stroke: #446600;
+}
+
 .hover_bar{
     fill-opacity: 0;
     
