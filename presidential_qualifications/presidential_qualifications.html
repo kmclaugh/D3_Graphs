@@ -29,16 +29,23 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div class='row hidden-xs hidden-sm'><p>&nbsp</p><p>&nbsp</p></div>
+            <div class='row'>
+                <div class='col-xs-12 text-center'>
+                    <h3>Presidential Qualifcations</h3>
+                </div>
+            </div>
             <div class='row'>
                 <div class='col-sm-12 col-md-4 table_column'>
-                    <p id='points_table_controls' class='points_table_controls text-center'>
+                    <p id='points_table_controls' class='controls text-center'>
                         <button class='btn btn-primary' type="button" id="toggle_default">Switch to Default Points</button>
                     </p>
+                    <div class="graph_title">Maximum Points per Position</div>
                     <div id='points_table'></div>
                 </div>
                 <div class='col-sm-12 col-md-8 graph_column'>
-                    <div class="graph" id='experience_graph_controls'></div>
+                    <div class="controls text-center" id='experience_graph_controls'>
+                        <button class="btn btn-primary" type="button" id="toggle_order">Sort by Total Points</button>
+                    </div>
                     <div class="graph" id='experience_graph'></div>
                 </div>
             </div>

@@ -71,7 +71,6 @@ function points_table_class(default_points, your_points, experience_graph, graph
         var new_value = Number($(input).val());
         var position = $(input).attr('position');
         self.your_points[position] = new_value;
-        console.log(new_value, self.default_points[position])
         if (new_value != self.default_points[position]) {
             var row = $(input).parent().parent();
             $(row).addClass('different_points')

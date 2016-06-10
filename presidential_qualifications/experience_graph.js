@@ -6,6 +6,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug){
     var min_height = 530,
         fixed_height = false,
         margin = {top: 0, right: 20, bottom: 40, left: 130};
+    self.current_order = "chronological"
     
     graph_class.call(this, the_data, graph_container_id, title_text, slug, min_height, fixed_height, margin);
     self.visible_data = the_data;
@@ -33,6 +34,30 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug){
             }
         }
     });
+    
+    $('#toggle_order').click(function(){
+        self.toggle_order();
+    });
+    
+    self.toggle_order = function(){
+        /*Toggles ordering the data by most to least and chronological*/
+        if (self.current_order == "chronological"){
+            self.current_order = "qualifications";
+            self.visible_data.sort(function(x, y){
+                return d3.descending(x.experience_points, y.experience_points);
+            });
+            self.update_graph();
+            $('#toggle_order').text('Sort Chronologically');
+        }
+        else if (self.current_order == "qualifications"){
+            self.current_order = "chronological";
+            self.visible_data.sort(function(x, y){
+                return d3.ascending(x.administration_start, y.administration_start);
+            });
+            self.update_graph();
+            $('#toggle_order').text('Sort by Total Points');
+        }
+    }
 
     self.update_graph_groups = function(group){
         /*Hide or shows the group*/
@@ -290,6 +315,9 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug){
         self.title_row = $('#title_row_'+self.graph_container_id);
         self.title_row.prepend('<div class="graph_title" id="title_'+self.graph_container_id+'">'+self.title_text+'</div>');
         self.title = $('#title_'+self.graph_container_id);
+        
+        //Create controls
+        $('#'+self.graph_container_id+'_controls').prepend('');
         
         self.tick_label_links();
         

@@ -19,7 +19,6 @@ $(window).load(function () {
             return d3.ascending(x.administration_start, y.administration_start);
         })
         //HACKy to do this here
-        
         candidate_list.forEach(function(candidate, i){
             candidate.id = i+1;
             candidate.Group = 'group'+Math.round(i / 10) * 10;
