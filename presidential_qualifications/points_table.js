@@ -46,12 +46,12 @@ function points_table_class(default_points, your_points, experience_graph, graph
     
     $(document).on("focus", 'input[name="Your Points"]', function(){
         var row = $(this).parent().parent();
-        row.animate({backgroundColor:'#00ccff'}, 1000)
+        row.animate({backgroundColor:'#d9edf7'}, 1000)
     })
     $(document).on("blur", 'input[name="Your Points"]', function(){
         var row = $(this).parent().parent();
         if (row.hasClass('different_points')) {
-            row.animate({backgroundColor:'#ffcc99'}, 1000, function(){
+            row.animate({backgroundColor:'#f2dede'}, 1000, function(){
                 row.css("background-color", "")
             });
         }
@@ -101,7 +101,7 @@ function points_table_class(default_points, your_points, experience_graph, graph
         /*creates the table*/
         self.table = d3.select('#'+self.graph_container_id)
             .append("table")
-                .attr('class', 'points_table')
+                .attr('class', 'points_table table')
         self.colgroup = self.table.append("colgroup");
         self.thead = self.table.append("thead");
         self.tbody = self.table.append("tbody");
@@ -125,6 +125,9 @@ function points_table_class(default_points, your_points, experience_graph, graph
             .data(self.columns)
             .enter()
             .append("th")
+                .attr('class', function(column){
+                    return column;
+                })
                 .text(function(column) { return column; });
         
         // create a row for each object in the data
@@ -143,7 +146,9 @@ function points_table_class(default_points, your_points, experience_graph, graph
             })
             .enter()
             .append("td")
-            .attr("style", "font-family: Courier") // sets the font style
+                .attr('class', function(d){
+                    return d.column;
+                })
                 .html(function(d) {
                     if (d.column != 'Your Points') {
                         return d.value;

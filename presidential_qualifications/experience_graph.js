@@ -219,7 +219,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug){
             .attr("x",0 - (self.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("President");
+            .text("Candidate");
         
         //Add the x axis label
         self.x_axis_label = self.svg_g.append("text")
