@@ -8,6 +8,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug){
         margin = {top: 0, right: 20, bottom: 40, left: 130};
     
     graph_class.call(this, the_data, graph_container_id, title_text, slug, min_height, fixed_height, margin);
+    self.visible_data = the_data;
     
     self.max_value = d3.max(self.data, function(d) { return + d.experience_points;} );
     
@@ -21,19 +22,19 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug){
     //Legend clicks
     $(document).on("click", '.legend_button.'+self.graph_container_id, function() {
         if (self.check_number_visible() > 1){
-            self.update_data($(this).attr('data_name'));
+            self.update_graph_groups($(this).attr('data_name'));
         }
         else{
             for (group in self.display_dictionary){
                 var display_prop = self.display_dictionary[group];
                 if (display_prop.visible == false){
-                    self.update_data(group);
+                    self.update_graph_groups(group);
                 }
             }
         }
     });
 
-    self.update_data = function(group){
+    self.update_graph_groups = function(group){
         /*Hide or shows the group*/
         
         //Toggle the display visibility for the group and legend button
@@ -60,6 +61,12 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug){
                 }
             }
         });
+        
+        self.update_graph();
+    }
+    
+    self.update_graph = function(){
+        /*Updates the graph for when the experience points change or the visible groups changes*/
         self.max_value = d3.max(self.visible_data, function(d) { return + d.experience_points;} );
         
         //Update the range and axis

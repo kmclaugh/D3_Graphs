@@ -3,8 +3,7 @@ $(window).load(function () {
     $(document).ready(function () {
         
         //Create the points table
-        var points_table = new points_table_class(the_data=Points_per_Position, graph_container_id='points_table', title_text='Points per Position', slug='Points_per_Position');
-        points_table.create();
+        var Points_per_Position_user = jQuery.extend(true, {}, Points_per_Position_default);
         
         //Create candidate list from data
         candidate_list = [];
@@ -12,7 +11,7 @@ $(window).load(function () {
             candidate_data = candidates_data[i];
             candidate = new candidate_class(name=candidate_data.name, id=i, group='group0', experience=candidate_data.experience, administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end, administration_length=candidate_data.administration_length)
             candidate.init_data();
-            candidate.calculate_experience_points(Points_per_Position);
+            candidate.calculate_experience_points(Points_per_Position_default);
             candidate_list.push(candidate)
         }
         
@@ -28,8 +27,10 @@ $(window).load(function () {
         
         console.log(candidate_list)
         
-        experience_graph = new experience_graph_class(the_data=candidate_list, graph_container_id='experience_graph', title_text='Presidential Experience', graph_slug='Presidential_Experience');
-       experience_graph.draw();
+        var experience_graph = new experience_graph_class(the_data=candidate_list, graph_container_id='experience_graph', title_text='Presidential Experience', graph_slug='Presidential_Experience');
+        var points_table = new points_table_class(default_points=Points_per_Position_default, your_points=Points_per_Position_user,  experience_graph=experience_graph, graph_container_id='points_table', title_text='Points per Position', slug='Points_per_Position_default');
+        points_table.create();
+        experience_graph.draw();
             
     });
 });
@@ -48,7 +49,6 @@ function candidate_class(name, id, group, experience, administration_start, admi
     self.administration_end = moment(administration_end, "MM/DD/YYYY");;
     self.administration_length = administration_length;
     self.experience_points = 0;
-    self.best_qualification = {'position':'None', 'experience_points':0, 'start_date': null, 'end_date': null}
     
     self.init_data = function(){
         self.experience.forEach(function(position){
@@ -65,6 +65,7 @@ function candidate_class(name, id, group, experience, administration_start, admi
     self.calculate_experience_points = function(points_per_position_dictionary){
         /*Calculates the total experience and stores it as the attribute 'experience_points'*/
         self.experience_points = 0;
+        self.best_qualification = {'position':'None', 'experience_points':0, 'start_date': null, 'end_date': null}
         self.experience.forEach(function(position){
             var position_points = points_per_position_dictionary[position['Position']] * position['experience_percentage'];
             self.experience_points += position_points;

@@ -15,6 +15,8 @@
         <script src="../vendor/d3.v3.min.js"></script>
         <script src="../vendor/d3-tip.js"></script>
         <script src="../vendor/moment.js"></script>
+        <script src="../vendor/jquery.color.js"></script>
+        <script src="../vendor/jquery.color.svg-names.js"></script>
         <script src="../vendor/graphing_functions.js"></script>
         <link rel="stylesheet" href="../vendor/graph_styles.css">
         
@@ -28,12 +30,17 @@
     <body>
         <div class="container-fluid">
              <div class='row'>
-                <div class='col-xs-12 table_column'>
-                    <div id='points_table'></div>
+                <div class='col-sm-12 col-md-3 table_column'>
+                    <div id='points_table_controls'>
+                        <button class='btn btn-primary' type="button" id="toggle_default">Switch to Default Points</button>
+                    </div>
                 </div>
             </div>
             <div class='row'>
-                <div class='col-xs-12 graph_column'>
+                <div class='col-sm-12 col-md-3 table_column'>
+                    <div id='points_table'></div>
+                </div>
+                <div class='col-sm-12 col-md-9 graph_column'>
                     <div class="graph" id='experience_graph_controls'></div>
                     <div class="graph" id='experience_graph'></div>
                 </div>

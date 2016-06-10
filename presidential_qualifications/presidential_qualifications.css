@@ -1,3 +1,16 @@
+.points_table td{
+}
+col.active_data{
+    background-color: #66ff99;
+}
+.different_points{
+    background-color: #ffcc99
+}
+input.your_points{
+    width: 40px;;
+    height: 15px;
+    text-align: center
+}
 .group0
 {
     fill: #8A0707;
