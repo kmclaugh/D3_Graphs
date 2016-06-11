@@ -9,7 +9,8 @@ $(window).load(function () {
         candidate_list = [];
         for (i=0; i<candidates_data.length; i++){
             candidate_data = candidates_data[i];
-            candidate = new candidate_class(name=candidate_data.name, id=i, group='group0', experience=candidate_data.experience, administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end, administration_length=candidate_data.administration_length)
+            console.log(candidate_data)
+            candidate = new candidate_class(name=candidate_data.name, id=i, group=candidate_data.group, experience=candidate_data.experience, administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end, administration_length=candidate_data.administration_length)
             candidate.init_data();
             candidate.calculate_experience_points(Points_per_Position_default);
             candidate_list.push(candidate)
@@ -18,11 +19,6 @@ $(window).load(function () {
         candidate_list.sort(function(x, y){
             return d3.ascending(x.administration_start, y.administration_start);
         })
-        //HACKy to do this here
-        candidate_list.forEach(function(candidate, i){
-            candidate.id = i+1;
-            candidate.Group = 'group'+Math.round(i / 10) * 10;
-        });
         
         console.log(candidate_list)
         
@@ -40,7 +36,7 @@ function candidate_class(name, id, group, experience, administration_start, admi
     
     var self = this;
     self.Name = name;
-    self.Group = 'group1';
+    self.Group = group;
     self.id = id;
     self['Source Link'] = '';
     self.experience = experience;
