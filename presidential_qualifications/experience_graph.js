@@ -350,6 +350,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug){
     
     self.show_tip = function(hover_target){
         /*Shows the tooltip and highlights the bar*/
+        console.log(hover_target)
         if (hover_target.Name == null || hover_target.Name.substring(0,1) != " " ){//HACK from data
             var hover_bar = self.hover_bars[0][hover_target.id-1];
             var tooltip_line = self.tooltip_lines[0][hover_target.id-1];
