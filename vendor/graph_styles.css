@@ -1,3 +1,19 @@
+@media (max-width: 550px){
+    .line {
+        stroke-width: 1px;
+    }
+}
+@media (min-width: 550px){
+    .line {
+        stroke-width: 2px;
+    }
+}
+.line{
+    stroke: blue;
+}
+.line{
+    fill: none;
+}
 .logo{
     float: left;
 }

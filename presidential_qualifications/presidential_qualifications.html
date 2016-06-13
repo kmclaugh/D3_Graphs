@@ -22,10 +22,68 @@
         
         <link rel="stylesheet" href="presidential_qualifications.css">
         <script type="text/javascript" src="data.js"></script>
+        <script type="text/javascript" src="experience_curve.js"></script>
         <script type="text/javascript" src="points_table.js"></script>
         <script type="text/javascript" src="experience_graph.js"></script>
+        <script type="text/javascript" src="rankings_graph.js"></script>
         <script type="text/javascript" src="presidential_qualifications.js"></script>
-        
+        <script type="text/javascript">
+            $(window).load(function () {
+
+                $(document).ready(function () {
+                    
+                    //Create the points table
+                    var Points_per_Position_user = jQuery.extend(true, {}, Points_per_Position_default);
+                    
+                    //Create candidate list from data
+                    candidate_list = [];
+                    for (i=0; i<candidates_data.length; i++){
+                        candidate_data = candidates_data[i];
+                        candidate = new candidate_class(name=candidate_data.name, id=i, group=candidate_data.group, experience=candidate_data.experience,
+                                                        administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end,
+                                                        administration_length=candidate_data.administration_length, executive_score=candidate_data.executive_score,
+                                                        domestic_score=candidate_data.domestic_score, combined_overall=candidate_data.combined_overall,
+                                                        foriegn_policy_score=candidate_data.foriegn_policy_score)
+                        candidate.init_data();
+                        candidate.calculate_experience_points(Points_per_Position_default);
+                        candidate_list.push(candidate)
+                    }
+                    candidate_list.sort(function(x, y){
+                        return d3.ascending(x.administration_start, y.administration_start);
+                    })
+                    //HACKy to do this here
+                    candidate_list.forEach(function(candidate, i){
+                        candidate.id = i+1;
+                    });
+                    console.log(candidate_list)
+                    
+                    var experience_graph = new experience_graph_class(the_data=candidate_list, graph_container_id='experience_graph', title_text='Presidential Experience', graph_slug='Presidential_Experience', controls_enabled=true, fixed_height=false);
+                    var points_table = new points_table_class(default_points=Points_per_Position_default, your_points=Points_per_Position_user,  experience_graph=experience_graph, graph_container_id='points_table', title_text='Points per Position', slug='Points_per_Position_default');
+                    var ranking_per_experience_graph = new rankings_per_experience_graph_class(the_data=candidate_list, graph_container_id='ranking_per_experience_graph', title_text='Ranking per Experience', graph_slug='Ranking_per_Experience', controls_enabled=true, fixed_height=false);
+                    points_table.create();
+                    experience_graph.draw();
+                    ranking_per_experience_graph.draw();
+                    
+                    //Copy candidate list for non changing data
+                    var duplicate_candidate_list = []
+                    candidate_list.forEach(function(candidate, i){
+                        var new_candidate = jQuery.extend(true, {}, candidate);
+                        duplicate_candidate_list.push(new_candidate)
+                    });
+                    
+                    //Create the second experience graph
+                    //var experience_graph2 = new experience_graph_class(the_data=duplicate_candidate_list, graph_container_id='experience_graph2', title_text='Presidential Experience - Founding Fathers', graph_slug='Presidential_Experience', controls_enabled=false, fixed_height=300);
+                    //experience_graph2.draw();
+                    ////Show founding fathers, ordered by total points
+                    //experience_graph2.update_graph_groups('group10')
+                    //experience_graph2.update_graph_groups('group20')
+                    //experience_graph2.update_graph_groups('group30')
+                    //experience_graph2.update_graph_groups('group40')
+                    //experience_graph2.toggle_order();
+                });
+            });
+            
+        </script>
     </head>
     <body>
         <div class="container-fluid">
@@ -47,6 +105,26 @@
                         <button class="btn btn-primary" type="button" id="toggle_order">Sort by Total Points</button>
                     </div>
                     <div class="graph" id='experience_graph'></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="controls text-center" id='experience_graph_controls'>
+                        <button class="btn btn-primary" >Some Control</button>
+                    </div>
+                    <div class="graph" id='ranking_per_experience_graph'></div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-xs-3 graph_column'></div>
+                <div class='col-xs-12 col-sm-6 graph_column'>
+                    <div class="graph" id='experience_graph2'></div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-xs-3 graph_column'></div>
+                <div class='col-xs-12 col-sm-6 graph_column'>
+                    <div class="graph" id='experience_curve'></div>
                 </div>
             </div>
         </div>

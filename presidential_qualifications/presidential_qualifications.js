@@ -1,37 +1,7 @@
-$(window).load(function () {
-    
-    $(document).ready(function () {
-        
-        //Create the points table
-        var Points_per_Position_user = jQuery.extend(true, {}, Points_per_Position_default);
-        
-        //Create candidate list from data
-        candidate_list = [];
-        for (i=0; i<candidates_data.length; i++){
-            candidate_data = candidates_data[i];
-            console.log(candidate_data)
-            candidate = new candidate_class(name=candidate_data.name, id=i, group=candidate_data.group, experience=candidate_data.experience, administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end, administration_length=candidate_data.administration_length)
-            candidate.init_data();
-            candidate.calculate_experience_points(Points_per_Position_default);
-            candidate_list.push(candidate)
-        }
-        
-        candidate_list.sort(function(x, y){
-            return d3.ascending(x.administration_start, y.administration_start);
-        })
-        
-        console.log(candidate_list)
-        
-        var experience_graph = new experience_graph_class(the_data=candidate_list, graph_container_id='experience_graph', title_text='Presidential Experience', graph_slug='Presidential_Experience');
-        var points_table = new points_table_class(default_points=Points_per_Position_default, your_points=Points_per_Position_user,  experience_graph=experience_graph, graph_container_id='points_table', title_text='Points per Position', slug='Points_per_Position_default');
-        points_table.create();
-        experience_graph.draw();
-            
-    });
-});
 
 
-function candidate_class(name, id, group, experience, administration_start, administration_end, administration_length ){
+
+function candidate_class(name, id, group, experience, administration_start, administration_end, administration_length, executive_score, domestic_score, combined_overall, foriegn_policy_score){
     /*Class for carrying around candidate info*/
     
     var self = this;
@@ -44,6 +14,10 @@ function candidate_class(name, id, group, experience, administration_start, admi
     self.administration_end = moment(administration_end, "MM/DD/YYYY");;
     self.administration_length = administration_length;
     self.experience_points = 0;
+    self.executive_score = executive_score;
+    self.domestic_score = domestic_score;
+    self.foriegn_policy_score = foriegn_policy_score
+    self.combined_overall = combined_overall;
     
     self.init_data = function(){
         self.experience.forEach(function(position){
@@ -53,7 +27,7 @@ function candidate_class(name, id, group, experience, administration_start, admi
             if (position['End_Date'] != null){
                 position['End_Date'] = moment(position['End_Date'], "MM/DD/YYYY");
             }
-            position['experience_percentage'] = experience_curve(position['Years_of_Experience']);
+            position['experience_percentage'] = experience_curve(position['Years_of_Experience'], true);
         });
     }
     
@@ -70,30 +44,4 @@ function candidate_class(name, id, group, experience, administration_start, admi
 
         });
     }
-}
-
-experience_curve = function(t){
-    /*Returns the the percent of total experience using the function Generalized Logistic Function used to calulcate
-     *given a time t spent in the position
-     *link: https://en.wikipedia.org/wiki/Generalised_logistic_function
-     *https://docs.google.com/spreadsheets/d/1BaL6V2jQZvppoQoKpLySdvj2q8v0Kq7J_ccpoejdvyE/edit#gid=1026319676
-     * Y = A+(K-A)/POW(C+Q*EXP(-B*(t-M)), 1/v)
-     */
-    var A = 0.034,
-        K = 1,
-        B = 0.7,
-        Q = 0.5,
-        M = 3.7,
-        C = 1,
-        v = 0.5;
-    if (t > 0){
-        var experience_percent = A+(K-A)/Math.pow(C+Q*Math.exp(-B*(t-M)), 1/v);
-        experience_percent = Math.round(experience_percent*100)/100; // Round to two decimal points
-    }
-    else{
-        var experience_percent = 0;
-    }
-    
-    return experience_percent;
-    
 }

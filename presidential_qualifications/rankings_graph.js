@@ -1,17 +1,19 @@
 
-function experience_graph_class(the_data, graph_container_id, title_text, slug, controls_enabled, fixed_height){
-    /*Class for the exeperience of presidents graph*/
+function rankings_per_experience_graph_class(the_data, graph_container_id, title_text, slug, controls_enabled, fixed_height){
+    /*Class for the ranking per experience of presidents graph*/
     
     var self = this;
     var min_height = 530,
-        margin = {top: 0, right: 20, bottom: 40, left: 130};
+        margin = {top: 5, right: 20, bottom: 40, left: 50};
     self.controls_enabled = controls_enabled;
     self.current_order = "chronological"
     
     graph_class.call(this, the_data, graph_container_id, title_text, slug, min_height, fixed_height, margin);
     self.visible_data = the_data;
     
-    self.max_value = d3.max(self.data, function(d) { return + d.experience_points;} );
+    self.y_max_value = d3.max(self.data, function(d) { return + d.executive_score;} );
+    self.x_max_value = d3.max(self.data, function(d) { return + d.experience_points;} );
+    console.log(self.y_max_value, self.x_max_value)
     
     //Create the groups display dictionary
     var groups = d3.map(self.data, function(d){ return d.Group}).keys();
@@ -83,63 +85,33 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
         self.visible_data = [];
         self.data.forEach(function(datum){
             if (self.display_dictionary[datum.Group.replace(/ /g , "_")].visible == true){
-                self.visible_data.push(datum)
-                if (datum['Percentage of Deaths from Warfare'] > self.max_value){
-                    self.max_value = datum['Percentage of Deaths from Warfare'];
-                }
+                self.visible_data.push(datum);
             }
         });
-        
+        console.log(self.visible_data)
         self.update_graph();
     }
     
     self.update_graph = function(){
         /*Updates the graph for when the experience points change or the visible groups changes*/
-        self.max_value = d3.max(self.visible_data, function(d) { return + d.experience_points;} );
+        self.y_max_value = d3.max(self.visible_data, function(d) { return + d.executive_score;} );
+        self.x_max_value = d3.max(self.visible_data, function(d) { return + d.experience_points;} );
         
         //Update the range and axis
         self.xRange
-            .domain([0,self.max_value]);
+            .domain([0,self.x_max_value]).nice();
         self.yRange
-            .domain(self.visible_data.map(function(d) {
-                    return [d.id, d.Name, d['Source Link']];
-            })
-        );
+            .domain([0,self.y_max_value]).nice();
+
         self.y_axis.transition().call(self.yAxis);
         self.x_axis.transition().call(self.xAxis);
         
         //Update the data bars
-        self.svg.selectAll("rect.data")
+        self.svg.selectAll(".point")
             .transition()
-            .attr('visibility', function(d){return self.return_group_visibility(d.Group)})
-            .attr("y", function(d) {return self.yRange([d.id, d.Name, d['Source Link']]); })
-            .attr("width", function(d) {return self.xRange(d.experience_points)})
-            .attr("height", self.yRange.rangeBand());
-        
-        //Update the hover bars
-        self.svg.selectAll("rect.hover_bar")
-            .attr('visibility', function(d){return self.return_group_visibility(d.Group)})
-            .attr("y", function(d) { return self.yRange([d.id, d.Name, d['Source Link']]); })
-            .attr("width", function(d) {return self.xRange(self.max_value)})
-            .attr("height", self.yRange.rangeBand())
-        
-        //Update the tooltip lines
-        self.tooltip_lines
-            .transition()
-            .attr("x1", self.xRange(0))
-            .attr("y1", function(d) {
-                var y = self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand()/2;
-                if (isNaN(y)){y = 0;}//Need to check for NaN
-                return y;
-            })
-            .attr("x2", self.xRange(self.max_value)/2+self.xRange(self.max_value)/3)
-            .attr("y2", function(d) {
-                var y = self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand()/2;
-                if (isNaN(y)){y = 0;}//Need to check for NaN
-                return y;
-            });
-        
-        self.tick_label_links();
+            .attr('visibility', function(d){ console.log(d.Group, self.return_group_visibility(d.Group)); return self.return_group_visibility(d.Group)})
+            .attr("cx", function(d) { return self.xRange(d.experience_points); })
+            .attr("cy", function(d) { return self.yRange(d.executive_score); });
     }
     
     self.resize = function(){
@@ -178,7 +150,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
         //Update the hover bars
         self.svg.selectAll("rect.hover_bar")
                 .attr("y", function(d) { return self.yRange([d.id, d.Name, d['Source Link']]); })
-                .attr("width", function(d) {return self.xRange(self.max_value)})
+                .attr("width", function(d) {return self.xRange(self.x_max_value)})
                 .attr("height", self.yRange.rangeBand())
         
         //Update the tooltip lines
@@ -189,7 +161,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
                 if (isNaN(y)){y = 0;}//Need to check for NaN
                 return y;
             })
-            .attr("x2", self.xRange(self.max_value)/2+self.xRange(self.max_value)/3)
+            .attr("x2", self.xRange(self.x_max_value)/2+self.xRange(self.x_max_value)/3)
             .attr("y2", function(d) {
                 var y = self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand()/2;
                 if (isNaN(y)){y = 0;}//Need to check for NaN
@@ -205,18 +177,15 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
         self.start_draw();
         
         //Create y and x ranges
-        self.yRange = d3.scale.ordinal()
-            .rangeBands([0, self.height], .15)
-            .domain(self.data.map(function(d) {
-                if (self.display_dictionary[d.Group.replace(/ /g , "_")].visible == true){
-                    return [d.id, d.Name, d['Source Link']];
-                }
-            })
-        );
-            
         self.xRange = d3.scale.linear()
             .range([0, self.width])
-            .domain([0,self.max_value]);
+            .domain([0,self.x_max_value])
+            .nice();
+            
+        self.yRange = d3.scale.linear()
+            .range([self.height, 0])
+            .domain([0,self.y_max_value])
+            .nice();
         
         //Create the axis functions
         self.xAxis = d3.svg.axis()
@@ -226,7 +195,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
             
         self.yAxis = d3.svg.axis()
             .scale(self.yRange)
-            .tickFormat(self.y_label_format)
+            .ticks(Math.max(self.width/85, 2))
             .orient('left');
       
         //add the x-axis
@@ -247,7 +216,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
             .attr("x",0 - (self.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Candidate");
+            .text("Executive Score");
         
         //Add the x axis label
         self.x_axis_label = self.svg_g.append("text")
@@ -257,46 +226,18 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
             .style("text-anchor", "middle")
             .attr('font-weight', 'bold')
             .text("Experience Points");
-
         
-        //Add tooltip lines
-        self.tooltip_lines = self.svg_g.selectAll("bar")
+        //Add actual points
+        //points
+        self.points_lists = self.svg_g.selectAll(".point")
             .data(self.data)
-            .enter().append("line")
-                .attr("class", "tooltip_line")
-                .attr("x1", self.xRange(0))
-                .attr("y1", function(d) { return self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand()/2; })
-                .attr("x2", self.xRange(self.max_value)/2+self.xRange(self.max_value)/3)
-                .attr("y2", function(d) { return self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand()/2; });
-        
-        //Add the actualy data bars
-        self.data_bars = self.svg_g.selectAll("bar")
-            .data(self.data)
-            .enter().append("rect")
-                .attr("class", function(d) { return 'bar data ' + d.Group.replace(/ /g , "_"); })
-                .attr('id', function(d) { return 'bar'+d.id} )
-                .attr("y", function(d) { return self.yRange([d.id, d.Name, d['Source Link']]); })
-                .attr("width", function(d) {return self.xRange(d.experience_points)})
-                .attr("x", 0)
-                .attr("height", self.yRange.rangeBand())
-        
-        //Add hover bars for tooltip
-        self.hover_bars = self.svg_g.selectAll("bar")
-            .data(self.data)
-            .enter().append("rect")
-                .attr("class", "hover_bar")
-                .attr("y", function(d) { return self.yRange([d.id, d.Name, d['Source Link']]); })
-                .attr("width", function(d) {
-                    return self.xRange(self.max_value)
-                })
-                .attr("x", 0)
-                .attr("height", self.yRange.rangeBand())
-                .on('mouseover', function(d){
-                    self.show_tip(d);
-                })
-                .on("mouseout", function(d){
-                    self.hide_tip(d);
-                });
+            .enter().append("circle")
+                .attr("class", function(d) {return "point " + d.Group.replace(/ /g , "_");})
+                .attr('r', '5')
+                .on('mouseover', function(d){self.show_tip(d, this);})
+                .on("mouseout", function(d){self.hide_tip(d, this);})
+                .attr("cx", function(d) { return self.xRange(d.experience_points); })
+                .attr("cy", function(d) { return self.yRange(d.executive_score); });
         
         //Create Graph legend
         self.graph_element.prepend('<div class="row legend_row" id=legend_row_'+self.graph_container_id+'>')
@@ -322,8 +263,6 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
         //Create controls
         $('#'+self.graph_container_id+'_controls').prepend('');
         
-        self.tick_label_links();
-        
         self.init_tooltip();
     }//End draw graph
     
@@ -338,46 +277,33 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
                 html_string += '<span class="tip_title">'+d.Name+'</span></br>';
                 //Date
                 html_string += d.administration_start.format("MMM Do, YYYY")  + ' - ' + d.administration_end.format("MMM Do, YYYY")  + '<p></p>';
-                //Best Qualification
-                html_string += '<span class="tip_title">Best Qualification</span></br>';
-                html_string += '<span>'+d.best_qualification.position+'</span></br>';
-                html_string += d.best_qualification.start_date.format("MMM Do, YYYY")  + ' - ' + d.best_qualification.end_date.format("MMM Do, YYYY")  + '<p></p>';
-                //Value
-                html_string += '<span class="value">Total Points '+Math.round(d.experience_points)+ "</span></br>";
-                html_string += "</div>";
+                //Points
+                html_string += '<table>';
+                html_string += '<tr><td class="text-left">Experience Points: </td><td style="padding-left:5px">'+Math.round(d.experience_points)+'</td></tr>';
+                html_string += '<tr><td class="text-left">Executive Score: </td><td style="padding-left:5px">'+Math.round(d.executive_score)+'</td></tr>';
+                html_string += '<tr><td class="text-left">Domestic Score: </td><td style="padding-left:5px">'+Math.round(d.domestic_score)+'</td></tr>';
+                html_string += '<tr><td class="text-left">Foreign Policy Score: </td><td style="padding-left:5px">'+Math.round(d.foriegn_policy_score)+'</td></tr>';
+                html_string += "</table></div>";
                 return html_string;
             });
         
         self.svg_g.call(self.tool_tip);
     }
     
-    self.show_tip = function(hover_target){
-        /*Shows the tooltip and highlights the bar*/
-        if (hover_target.Name == null || hover_target.Name.substring(0,1) != " " ){//HACK from data
-            var hover_bar = self.hover_bars[0][hover_target.id-1];
-            var tooltip_line = self.tooltip_lines[0][hover_target.id-1];
-            var data_bar = self.data_bars[0][hover_target.id-1];
-            add_class(d3.select(data_bar), 'highlight');
-            add_class(d3.select(tooltip_line), 'highlight');
-            self.tool_tip.offset(function() {
-                if (hover_target.experience_points < self.max_value/2+self.max_value/3){
-                    return [self.yRange.rangeBand()/2-9, self.xRange(self.max_value)/3];
-                }
-                else{
-                    return [-9, self.xRange(self.max_value)/3];
-                }
-            })
-            self.tool_tip.show(hover_target, hover_bar);
-        }
+    self.show_tip = function(target_data, target){
+        /*Shows the tooltip and highlights the point*/
+        //var hover_point = self.points_lists[0][hover_target.id-1];
+        add_class(d3.select(target), 'highlight');
+        d3.select(target).attr('r', 10)
+        self.tool_tip.show(target_data, target);
+        self.tool_tip.offset([-9, 0]);
     }
     
-    self.hide_tip = function(hover_target){
+    self.hide_tip = function(target_data, target){
         /*Hides the tooltip and de-highlights the bar*/
-        var data_bar = self.data_bars[0][hover_target.id-1];
-        var tooltip_line = self.tooltip_lines[0][hover_target.id-1];
-        remove_class(d3.select(data_bar), 'highlight')
-        remove_class(d3.select(tooltip_line), 'highlight')
-        self.tool_tip.hide()
+        d3.select(target).attr('r', 5)
+        remove_class(d3.select(target), 'highlight');
+        self.tool_tip.hide();
     }
     
     /********Reusable functions**************/
