@@ -255,7 +255,6 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
             .attr("x",(self.width / 2))
             .attr("dy", ".75em")
             .style("text-anchor", "middle")
-            .attr('font-weight', 'bold')
             .text("Experience Points");
 
         
@@ -322,7 +321,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
         //Create controls
         $('#'+self.graph_container_id+'_controls').prepend('');
         
-        self.tick_label_links();
+        //self.tick_label_links();
         
         self.init_tooltip();
     }//End draw graph
@@ -341,7 +340,12 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
                 //Best Qualification
                 html_string += '<span class="tip_title">Best Qualification</span></br>';
                 html_string += '<span>'+d.best_qualification.position+'</span></br>';
-                html_string += d.best_qualification.start_date.format("MMM Do, YYYY")  + ' - ' + d.best_qualification.end_date.format("MMM Do, YYYY")  + '<p></p>';
+                if (d.best_qualification.position != "None") {
+                    html_string += d.best_qualification.start_date.format("MMM Do, YYYY")  + ' - ' + d.best_qualification.end_date.format("MMM Do, YYYY")  + '<p></p>';
+                }
+                else{
+                    html_string += '<p></p>';
+                }
                 //Value
                 html_string += '<span class="value">Total Points '+Math.round(d.experience_points)+ "</span></br>";
                 html_string += "</div>";

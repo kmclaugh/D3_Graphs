@@ -1,10 +1,11 @@
-function points_table_class(default_points, your_points, experience_graph, graph_container_id, title_text, slug){
+function points_table_class(default_points, your_points, experience_graph, rankings_graph, graph_container_id, title_text, slug){
     /*Class for the points per positions table*/
     
     var self = this;
     self.default_points = default_points;
     self.your_points = your_points
     self.experience_graph = experience_graph;
+    self.rankings_graph = rankings_graph;
     self.current_data = 'user_points'
     self.data = $.map(self.default_points, function(value, key) {
                     return {'Position': key, 'Default Points': value,
@@ -26,7 +27,6 @@ function points_table_class(default_points, your_points, experience_graph, graph
             self.experience_graph.data.forEach(function(candidate){
                 candidate.calculate_experience_points(self.default_points);
             });
-            self.experience_graph.update_graph();
             $(this).text("Switch to Your Points");
         }
         else if (self.current_data == "default_points") {
@@ -39,9 +39,10 @@ function points_table_class(default_points, your_points, experience_graph, graph
             self.experience_graph.data.forEach(function(candidate){
                 candidate.calculate_experience_points(self.your_points);
             });
-            self.experience_graph.update_graph();
             $(this).text("Switch to Default Points");
         }
+        self.experience_graph.update_graph();
+        self.rankings_graph.update_graph();
     })
     
     $(document).on("focus", 'input[name="Your Points"]', function(){
@@ -88,6 +89,7 @@ function points_table_class(default_points, your_points, experience_graph, graph
             });
             
             self.experience_graph.update_graph();
+            self.rankings_graph.update_graph();
         }
         
     }

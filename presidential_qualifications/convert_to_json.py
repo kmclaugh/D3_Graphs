@@ -7,12 +7,12 @@ dataframe = pandas.read_csv('Candidates.csv')
 
 candidate_dictionary = {}
 for row in dataframe.iterrows():
-    president = row[1][0]
+    president = row[1][1]
     if president not in candidate_dictionary:
-        candidate_dictionary[president] = {'experience': [], 'administration_start': row[1][2], 'administration_end':row[1][3], 'administration_length': row[1][4]}
+        candidate_dictionary[president] = {'experience': [], 'administration_start': row[1][3], 'administration_end':row[1][4], 'administration_length': row[1][5]}
         
     else:
-        candidate_dictionary[president]['experience'].append({'Position': row[1][1], 'Start_Date':row[1][2], 'End_Date':row[1][3], 'Years_of_Experience':row[1][4]})
+        candidate_dictionary[president]['experience'].append({'Position': row[1][2], 'Start_Date':row[1][3], 'End_Date':row[1][4], 'Years_of_Experience':row[1][5]})
 
 dataframe = pandas.read_csv('Rankings.csv')
 

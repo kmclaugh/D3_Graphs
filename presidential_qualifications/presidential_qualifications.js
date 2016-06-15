@@ -1,7 +1,7 @@
 
 
 
-function candidate_class(name, id, group, experience, administration_start, administration_end, administration_length, executive_score, domestic_score, combined_overall, foriegn_policy_score){
+function candidate_class(name, id, group, experience, administration_start, administration_end, administration_length, executive_score, domestic_score, combined_overall, foreign_policy_score){
     /*Class for carrying around candidate info*/
     
     var self = this;
@@ -16,7 +16,7 @@ function candidate_class(name, id, group, experience, administration_start, admi
     self.experience_points = 0;
     self.executive_score = executive_score;
     self.domestic_score = domestic_score;
-    self.foriegn_policy_score = foriegn_policy_score
+    self.foreign_policy_score = foreign_policy_score
     self.combined_overall = combined_overall;
     
     self.init_data = function(){

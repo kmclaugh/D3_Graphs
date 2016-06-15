@@ -9,6 +9,13 @@
 col.active_data{
     background-color: #dff0d8;
 }
+line.regression_line{
+    stroke: red;
+}
+.regression_label{
+    color: red;
+    fill: red;
+}
 .Default.Points,
 .Your.Points{
     text-align: center;
@@ -46,6 +53,13 @@ input.your_points{
     fill: #996633;
     stroke: #996633;
     
+}
+.Candidates_2016{
+    fill: #339966;
+    stroke: #339966;
+}
+.excluded{
+    fill: none;
 }
 .hover_bar{
     fill-opacity: 0;

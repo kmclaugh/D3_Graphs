@@ -168,7 +168,7 @@ function set_graph_dimensions(graph_object){
     /*Resets the heighth, width and margins based on the containing width and height*/
     var graph_container_height
     if (graph_object.fixed_height == false){
-        graph_container_height = $( window ).height()*.85;
+        graph_container_height = $( window ).height()*.75;
         //console.log(graph_container_height, graph_object.min_height)
         if (graph_object.min_height != false && graph_container_height < graph_object.min_height){
             graph_container_height = graph_object.min_height;

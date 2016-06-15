@@ -11,6 +11,8 @@
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="../vendor/simple-statistics.min.js"></script>
+        
         
         <script src="../vendor/d3.v3.min.js"></script>
         <script src="../vendor/d3-tip.js"></script>
@@ -43,7 +45,7 @@
                                                         administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end,
                                                         administration_length=candidate_data.administration_length, executive_score=candidate_data.executive_score,
                                                         domestic_score=candidate_data.domestic_score, combined_overall=candidate_data.combined_overall,
-                                                        foriegn_policy_score=candidate_data.foriegn_policy_score)
+                                                        foreign_policy_score=candidate_data.foriegn_policy_score)
                         candidate.init_data();
                         candidate.calculate_experience_points(Points_per_Position_default);
                         candidate_list.push(candidate)
@@ -55,14 +57,15 @@
                     candidate_list.forEach(function(candidate, i){
                         candidate.id = i+1;
                     });
-                    console.log(candidate_list)
                     
                     var experience_graph = new experience_graph_class(the_data=candidate_list, graph_container_id='experience_graph', title_text='Presidential Experience', graph_slug='Presidential_Experience', controls_enabled=true, fixed_height=false);
-                    var points_table = new points_table_class(default_points=Points_per_Position_default, your_points=Points_per_Position_user,  experience_graph=experience_graph, graph_container_id='points_table', title_text='Points per Position', slug='Points_per_Position_default');
-                    var ranking_per_experience_graph = new rankings_per_experience_graph_class(the_data=candidate_list, graph_container_id='ranking_per_experience_graph', title_text='Ranking per Experience', graph_slug='Ranking_per_Experience', controls_enabled=true, fixed_height=false);
+                    var candidate_list_wo_2016 = candidate_list.filter(function(d) { return d.Group != "Candidates 2016"; });
+                    var ranking_per_experience_graph = new rankings_per_experience_graph_class(the_data=candidate_list_wo_2016, graph_container_id='ranking_per_experience_graph', title_text='Ranking per Experience', graph_slug='Ranking_per_Experience', controls_enabled=true, fixed_height=false);
+                    var points_table = new points_table_class(default_points=Points_per_Position_default, your_points=Points_per_Position_user, experience_graph=experience_graph, rankings_graph=ranking_per_experience_graph, graph_container_id='points_table', title_text='Points per Position', slug='Points_per_Position_default');
                     points_table.create();
                     experience_graph.draw();
                     ranking_per_experience_graph.draw();
+                    //ranking_per_experience_graph.exclude_lincoln.trigger("click");
                     
                     //Copy candidate list for non changing data
                     var duplicate_candidate_list = []
@@ -93,6 +96,12 @@
                 </div>
             </div>
             <div class='row'>
+                <div class='col-xs-12 text-center'>
+                    <h5>View and download the complete dataset <a target="_blank" href="https://docs.google.com/spreadsheets/d/1BaL6V2jQZvppoQoKpLySdvj2q8v0Kq7J_ccpoejdvyE/edit?usp=sharing">here</a></h3>
+                    <h5>Source code available on <a target="_blank" href="https://github.com/kmclaugh/D3_Graphs/tree/master/presidential_qualifications">Github</a></h3>                
+                </div>
+            </div>
+            <div class='row'>
                 <div class='col-sm-12 col-md-4 table_column'>
                     <p id='points_table_controls' class='controls text-center'>
                         <button class='btn btn-primary' type="button" id="toggle_default">Switch to Default Points</button>
@@ -109,8 +118,9 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="controls text-center" id='experience_graph_controls'>
-                        <button class="btn btn-primary" >Some Control</button>
+                    <div class="controls text-center" id='ranking_per_experience_graph_controls'>
+                        
+                        
                     </div>
                     <div class="graph" id='ranking_per_experience_graph'></div>
                 </div>
