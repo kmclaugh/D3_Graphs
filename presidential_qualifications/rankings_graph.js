@@ -117,7 +117,7 @@ function rankings_per_experience_graph_class(the_data, graph_container_id, title
         
         //Update the data points
         self.svg.selectAll(".point")
-            .transition()
+             .transition()
             .attr('visibility', function(d){ return self.return_group_visibility(d.Group)})
             .attr("cx", function(d) { return self.xRange(d.experience_points); })
             .attr("cy", function(d) { return self.yRange(self.calculate_rankings_value(d)); });
@@ -126,6 +126,7 @@ function rankings_per_experience_graph_class(the_data, graph_container_id, title
         self.caluclate_linear_regression_values();
         //line
         self.regression_line
+            .transition()
             .attr("y1", self.yRange(self.lr_intercept))
             .attr("y2", self.yRange(self.lr_max_y))
             .attr("x1", self.xRange(0))
@@ -135,6 +136,7 @@ function rankings_per_experience_graph_class(the_data, graph_container_id, title
         var r_string = 'r2 = ' + self.lr_r2.toPrecision(2);
         var regression_info = equation + ', ' + r_string;
         self.regression_label
+            .transition()
             .attr('x', function() { return self.xRange( self.lr_max_x) })
             .attr('y', function() { return self.yRange(self.lr_max_y); })
             .text(regression_info);
