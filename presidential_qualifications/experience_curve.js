@@ -134,7 +134,6 @@ function exeperience_curve_class(the_data, graph_container_id, title_text, slug)
             .attr("x",(self.width / 2))
             .attr("dy", ".75em")
             .style("text-anchor", "middle")
-            .attr('font-weight', 'bold')
             .text("Years of Experience");
         
         //Create Graph Title
