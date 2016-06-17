@@ -125,7 +125,7 @@ function exeperience_curve_class(the_data, graph_container_id, title_text, slug)
             .attr("x",0 - (self.height / 2))
             .attr("dy", ".75em")
             .style("text-anchor", "middle")
-            .text("Percent of Total Points");
+            .text("Percent of Maximum Points");
         
         
          //Add the x axis label

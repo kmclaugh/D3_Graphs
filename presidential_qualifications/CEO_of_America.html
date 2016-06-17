@@ -45,7 +45,7 @@
                                                         administration_start=candidate_data.administration_start, administration_end=candidate_data.administration_end,
                                                         administration_length=candidate_data.administration_length, executive_score=candidate_data.executive_score,
                                                         domestic_score=candidate_data.domestic_score, combined_overall=candidate_data.combined_overall,
-                                                        foreign_policy_score=candidate_data.foriegn_policy_score, order=i)
+                                                        foreign_policy_score=candidate_data.foriegn_policy_score)
                         candidate.init_data();
                         candidate.calculate_experience_points(Points_per_Position_default);
                         candidate_list.push(candidate)
@@ -56,7 +56,6 @@
                     //HACKy to do this here
                     candidate_list.forEach(function(candidate, i){
                         candidate.id = i+1;
-                        candidate.order = i+1
                     });
                     
                     var experience_graph = new experience_graph_class(the_data=candidate_list, graph_container_id='experience_graph', title_text='Presidential Experience', graph_slug='Presidential_Experience', controls_enabled=true, fixed_height=false);
@@ -66,11 +65,24 @@
                     points_table.create();
                     experience_graph.draw();
                     ranking_per_experience_graph.draw();
-                    ranking_per_experience_graph.exclude_lincoln.trigger("click");
+                    //ranking_per_experience_graph.exclude_lincoln.trigger("click");
                     
-                    var ranking_per_experience_graph2 = new rankings_per_experience_graph_class(the_data=candidate_list_wo_2016, graph_container_id='ranking_per_experience_graph2', title_text='Presidential Success per Experience', graph_slug='Ranking_per_Experience', controls_enabled=true, fixed_height=false);
-                    ranking_per_experience_graph2.draw()
-
+                    //Copy candidate list for non changing data
+                    var duplicate_candidate_list = []
+                    candidate_list.forEach(function(candidate, i){
+                        var new_candidate = jQuery.extend(true, {}, candidate);
+                        duplicate_candidate_list.push(new_candidate)
+                    });
+                    
+                    //Create the second experience graph
+                    //var experience_graph2 = new experience_graph_class(the_data=duplicate_candidate_list, graph_container_id='experience_graph2', title_text='Presidential Experience - Founding Fathers', graph_slug='Presidential_Experience', controls_enabled=false, fixed_height=300);
+                    //experience_graph2.draw();
+                    ////Show founding fathers, ordered by total points
+                    //experience_graph2.update_graph_groups('group10')
+                    //experience_graph2.update_graph_groups('group20')
+                    //experience_graph2.update_graph_groups('group30')
+                    //experience_graph2.update_graph_groups('group40')
+                    //experience_graph2.toggle_order();
                 });
             });
             
@@ -109,9 +121,10 @@
                     <div class="graph" id='ranking_per_experience_graph'></div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="graph" id='ranking_per_experience_graph2'></div>
+            <div class='row'>
+                <div class='col-xs-3 graph_column'></div>
+                <div class='col-xs-12 col-sm-6 graph_column'>
+                    <div class="graph" id='experience_graph2'></div>
                 </div>
             </div>
             <div class='row'>

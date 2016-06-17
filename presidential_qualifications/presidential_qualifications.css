@@ -166,3 +166,7 @@ input.your_points{
     background-color: transparent;
     border: hidden;
 }
+text.ranking_text{
+    stroke: none;
+    font-size: 10px;
+}

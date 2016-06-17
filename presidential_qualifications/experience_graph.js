@@ -50,6 +50,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
                 return d3.descending(x.experience_points, y.experience_points);
             });
             self.update_graph();
+                
             $('#toggle_order').text('Sort Chronologically');
         }
         else if (self.current_order == "qualifications"){
@@ -121,7 +122,31 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
             .attr('visibility', function(d){return self.return_group_visibility(d.Group)})
             .attr("y", function(d) { return self.yRange([d.id, d.Name, d['Source Link']]); })
             .attr("width", function(d) {return self.xRange(self.max_value)})
-            .attr("height", self.yRange.rangeBand())
+            .attr("height", self.yRange.rangeBand());
+        
+        //Update the numbers
+        self.visible_data.forEach(function(candidate, i){
+            candidate.order = i+1;
+        });
+        self.svg.selectAll(".ranking_text")
+            .attr("y", function(d) {
+                if (self.return_group_visibility(d.Group) == 'visible'){
+                    return self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand();
+                }
+                else{
+                    return self.yRange([d.id, d.Name, d['Source Link']])
+                }
+            })
+            .attr("x", function(d) {return self.xRange(d.experience_points)+15})
+            .text(function(d) { return d.order;})
+            .attr('visibility', function(){
+                if (self.current_order == "qualifications"){
+                    return 'visible'
+                }
+                else{
+                    return 'hidden'
+                }
+            });
         
         //Update the tooltip lines
         self.tooltip_lines
@@ -179,7 +204,19 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
         self.svg.selectAll("rect.hover_bar")
                 .attr("y", function(d) { return self.yRange([d.id, d.Name, d['Source Link']]); })
                 .attr("width", function(d) {return self.xRange(self.max_value)})
-                .attr("height", self.yRange.rangeBand())
+                .attr("height", self.yRange.rangeBand());
+        
+        //Update the numbers
+        self.svg.selectAll(".ranking_text")
+            .attr("y", function(d) {
+                if (self.return_group_visibility(d.Group) == 'visible'){
+                    return self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand();
+                }
+                else{
+                    return self.yRange([d.id, d.Name, d['Source Link']])
+                }
+            })
+            .attr("x", function(d) {return self.xRange(d.experience_points)+15})
         
         //Update the tooltip lines
         self.tooltip_lines
@@ -268,7 +305,7 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
                 .attr("x2", self.xRange(self.max_value)/2+self.xRange(self.max_value)/3)
                 .attr("y2", function(d) { return self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand()/2; });
         
-        //Add the actualy data bars
+        //Add the actual data bars
         self.data_bars = self.svg_g.selectAll("bar")
             .data(self.data)
             .enter().append("rect")
@@ -296,6 +333,19 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
                 .on("mouseout", function(d){
                     self.hide_tip(d);
                 });
+        
+        //Add the numbers
+        self.ranking_texts = self.svg_g.selectAll("number")
+            .data(self.data)
+            .enter().append("text")
+                .attr("class", function(d) { return 'ranking_text ' + d.Group.replace(/ /g , "_"); })
+                .attr("y", function(d) {
+                    return self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand();
+                })
+                .attr("x", function(d) {return self.xRange(d.experience_points)+15})
+                .attr('visibility', 'hidden')
+                .attr('text-anchor', "end")
+                .text(function(d) { return d.order;});
         
         //Create Graph legend
         self.graph_element.prepend('<div class="row legend_row" id=legend_row_'+self.graph_container_id+'>')

@@ -238,7 +238,7 @@ function rankings_per_experience_graph_class(the_data, graph_container_id, title
             .attr("x",0 - (self.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Quality Score");
+            .text("Success Score");
         
         //Add the x axis label
         self.x_axis_label = self.svg_g.append("text")
