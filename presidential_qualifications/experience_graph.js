@@ -98,6 +98,17 @@ function experience_graph_class(the_data, graph_container_id, title_text, slug, 
         /*Updates the graph for when the experience points change or the visible groups changes*/
         self.max_value = d3.max(self.visible_data, function(d) { return + d.experience_points;} );
         
+        if (self.current_order == "chronological"){
+            self.visible_data.sort(function(x, y){
+                return d3.ascending(x.administration_start, y.administration_start);
+            });
+        }
+        else if (self.current_order == "qualifications"){
+            self.visible_data.sort(function(x, y){
+                return d3.descending(x.experience_points, y.experience_points);
+            });
+        }
+        
         //Update the range and axis
         self.xRange
             .domain([0,self.max_value]);
