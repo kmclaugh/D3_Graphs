@@ -291,28 +291,29 @@ function rankings_per_experience_graph_class(the_data, graph_container_id, title
             .text(regression_info);
         self.graph_element.prepend('<div class="row regression_row visible-xs"><div class="col-xs-12 text-center regression_label">Regression Info<br/><span id="regression_info_'+self.graph_container_id+'"> '+regression_info+'</span></div></div>')
         self.regression_info = $('#regression_info_'+self.graph_container_id)
+        
         //Create Graph legend
-        self.graph_element.prepend('<div class="row legend_row" id=legend_row_'+self.graph_container_id+'>')
+        self.graph_element.prepend('<div class="row legend_row" id=legend_row_'+self.graph_container_id+'>');
         self.legend_row = $('#legend_row_'+self.graph_container_id);
-        self.legend_row.append('<div class="col-xs-12 col-sm-2 scale_col" id=scale_col_'+self.graph_container_id+'></div>')
+        self.legend_row.append('<div class="col-xs-12 col-sm-2 scale_col" id=scale_col_'+self.graph_container_id+'></div>');
         self.scale_col = $('#scale_col_'+self.graph_container_id);
-        self.legend_row.append('<div class="col-xs-12 col-sm-10" id=legend_col_'+self.graph_container_id+'></div>')
+        self.legend_row.append('<div class="col-xs-12 col-sm-10" id=legend_col_'+self.graph_container_id+'></div>');
         self.legend_col = $('#legend_col_'+self.graph_container_id);
         var i = 0;
         for (var group in self.display_dictionary){
             var value = self.display_dictionary[group];
-            var legend_element = '<button class="legend_button '+self.graph_container_id+'" data_name="'+group+'"><svg width="15" height="14" style="vertical-align: middle"><circle class="legend series visible_'+value.visible+' '+group+'" data_name="'+group+'" r="5" cx="6" cy="7"></circle></svg>'+value.display_name+'</button>';
+            var legend_element = '<button ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Presidential Experience and Success - Success per Experience Graph" class="legend_button '+self.graph_container_id+'" data_name="'+group+'"><svg width="15" height="14" style="vertical-align: middle"><circle class="legend series visible_'+value.visible+' '+group+'" data_name="'+group+'" r="5" cx="6" cy="7"></circle></svg>'+value.display_name+'</button>';
             self.legend_col.append('<div class="legend_button_wrapper">'+legend_element+'</div>');       
             i++;
         };
         
         //Create rankings and exclude Lincoln controls
         self.toggle_lincoln(exclude=true)
-        var executive_score_string = '<label><input checked name="'+self.slug+'_rankings_box" type="checkbox" value="executive_score">Exectuive Score</label>  ';
-        var domestic_score_string = '<label><input checked name="'+self.slug+'_rankings_box" type="checkbox" value="domestic_score">Domestic Score</label>  ';
-        var foreign_policy_score_string = '<label><input checked name="'+self.slug+'_rankings_box" type="checkbox" value="foreign_policy_score">Foreign Policy Score</label>  ';
-        var overall_score_string = '<label><input name="'+self.slug+'_rankings_box" type="checkbox" value="combined_overall">Overall Score</label>  ';
-        var exclude_lincoln_string = '<label><input checked id="'+self.slug+'_exclude_lincoln" name="'+self.slug+'_rankings_box" type="checkbox" value="exclude_lincoln">Exclude Lincoln</label>  ';
+        var executive_score_string = '<label><input ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Presidential Experience and Success - Success per Experience Graph" checked name="'+self.slug+'_rankings_box" type="checkbox" value="executive_score">Exectuive Score</label>  ';
+        var domestic_score_string = '<label><input ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Presidential Experience and Success - Success per Experience Graph" checked name="'+self.slug+'_rankings_box" type="checkbox" value="domestic_score">Domestic Score</label>  ';
+        var foreign_policy_score_string = '<label><input ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Presidential Experience and Success - Success per Experience Graph" checked name="'+self.slug+'_rankings_box" type="checkbox" value="foreign_policy_score">Foreign Policy Score</label>  ';
+        var overall_score_string = '<label><input ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Presidential Experience and Success - Success per Experience Graph" name="'+self.slug+'_rankings_box" type="checkbox" value="combined_overall">Overall Score</label>  ';
+        var exclude_lincoln_string = '<label><input ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Presidential Experience and Success - Success per Experience Graph" checked id="'+self.slug+'_exclude_lincoln" name="'+self.slug+'_rankings_box" type="checkbox" value="exclude_lincoln">Exclude Lincoln</label>  ';
         $('#'+self.graph_container_id).prepend('<div class="row"><div class="col-xs-12 text-center">'+exclude_lincoln_string+'</div></div>');
         $('#'+self.graph_container_id).prepend('<div class="row"><div class="col-xs-12 text-center"><label>Rank by</label><br class="visible-xs"/>  '+executive_score_string+domestic_score_string+foreign_policy_score_string+overall_score_string+'</div></div>');
         self.exclude_lincoln = $('#'+self.slug+'_exclude_lincoln');

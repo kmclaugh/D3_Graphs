@@ -42,6 +42,11 @@ $(window).load(function () {
             mass = Number($('#mass').slider('getValue'));
             demo.ball.attr('fill-opacity', mass/10);
         });
+         
+         $("#mass").on("slide", function(slideEvt) {
+            mass = Number($('#mass').slider('getValue'));
+            demo.ball.attr('fill-opacity', mass/10);
+        });
         
         //When the window resizes, resize the graph
         $( window ).resize(function() {

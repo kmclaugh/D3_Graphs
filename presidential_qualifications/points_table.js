@@ -155,7 +155,7 @@ function points_table_class(default_points, your_points, experience_graph, ranki
                         return d.value;
                     }
                     else{
-                        return '<input class="your_points" name="Your Points" position="'+d.position+'" value="'+d.value()+'"></input>';
+                        return '<input ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Presidential Experience and Success - Table" class="your_points" name="Your Points" position="'+d.position+'" value="'+d.value()+'"></input>';
                     }
                 });
         

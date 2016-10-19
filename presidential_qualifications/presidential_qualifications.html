@@ -69,7 +69,7 @@
                     ranking_per_experience_graph.exclude_lincoln.trigger("click");
                     
                     var ranking_per_experience_graph2 = new rankings_per_experience_graph_class(the_data=candidate_list_wo_2016, graph_container_id='ranking_per_experience_graph2', title_text='Presidential Success per Experience', graph_slug='Ranking_per_Experience', controls_enabled=true, fixed_height=false);
-                    ranking_per_experience_graph2.draw()
+                    ranking_per_experience_graph2.draw();
 
                 });
             });
@@ -80,11 +80,12 @@
         <div class="container-fluid">
             <div class='row'>
                 <div class='col-xs-12 text-center'>
-                    <h3>Presidential Qualifcations</h3>
+                    <h3>Presidential Experience and Success</h3>
                 </div>
             </div>
             <div class='row'>
                 <div class='col-xs-12 text-center'>
+                    <h5>Read the <a href='http://www.countingcalculi.com/features/does_presidential_experience_matters/'>article</a> about how it works</h5>
                     <h5>View and download the complete dataset <a target="_blank" href="https://docs.google.com/spreadsheets/d/1fsZSTmrhj8f3jkFo3yXHg53XJ3Rk6oEFIdlPB9agg64/edit#gid=1869754996">here</a></h3>
                     <h5>Source code available on <a target="_blank" href="https://github.com/kmclaugh/D3_Graphs/tree/master/presidential_qualifications">Github</a></h3>                
                 </div>
@@ -92,14 +93,14 @@
             <div class='row'>
                 <div class='col-sm-12 col-md-4 table_column'>
                     <p id='points_table_controls' class='controls text-center'>
-                        <button class='btn btn-primary' type="button" id="toggle_default">Switch to Default Points</button>
+                        <button ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Presidential Experience and Success - Table" class='btn btn-primary' type="button" id="toggle_default">Switch to Default Points</button>
                     </p>
                     <div class="graph_title">Maximum Points per Position</div>
                     <div id='points_table' ></div>
                 </div>
                 <div class='col-sm-12 col-md-8 graph_column'>
                     <div class="controls text-center" id='experience_graph_controls'>
-                        <button class="btn btn-primary" type="button" id="toggle_order">Sort by Total Points</button>
+                        <button ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Presidential Experience and Success - Experience Graph" class="btn btn-primary" type="button" id="toggle_order">Sort by Total Points</button>
                     </div>
                     <div class="graph" id='experience_graph'></div>
                 </div>
