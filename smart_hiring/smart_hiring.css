@@ -1,16 +1,19 @@
-.controls{
-    margin-top: 10px;
-    margin-bottom: 10px;
+.candidateScore
+{
+    fill: #339966;
+    stroke: #339966;
 }
-.points_table td{
-    padding: 2px!important;    
-    vertical-align: center;
+.cutoff_line{
+    stroke: blue;
+    fill: blue;
 }
-col.active_data{
-    background-color: #dff0d8;
-}
-line.regression_line{
+.regression_line{
     stroke: red;
+    fill: red;
+}
+line.regression_line,
+line.cutoff_line{
+    stroke-width: 2;
 }
 .regression_label{
     color: red;
@@ -99,3 +102,32 @@ text.ranking_text{
     stroke: none;
     font-size: 10px;
 }
+
+.d3-tip:after {
+    text-align: center;
+    content:'';
+    display:block;
+    width:0;
+    height:0;
+    position:absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid black;
+    bottom:-10px;
+    left: 50%;
+    margin-left: -10px;
+}
+.d3-tip{
+    line-height: 1;
+    background-color: white;
+    border: solid;
+    border-width: 1px;
+    padding: 5px;
+    text-align: center;
+    max-width: 300px;
+}
+.value,
+.tip_title{
+    font-weight: bold;
+}
+.so

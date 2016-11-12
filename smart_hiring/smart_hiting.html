@@ -25,13 +25,17 @@
         <link rel="stylesheet" href="smart_hiring.css">
         <script type="text/javascript" src="data.js"></script>
         <script type="text/javascript" src="candidate_scores.js"></script>
+        <script type="text/javascript" src="resume_v_final.js"></script>
         <script type="text/javascript">
             $(window).load(function () {
 
                 $(document).ready(function () {
                     
-                   var candidateScoresGraph = new candidate_scores_graph_class(candidateData, 'candidate_scores', 'Candidate Scores', 'slug', true, false);
+                   var candidateScoresGraph = new candidate_scores_graph_class(candidateData, 'candidate_scores', 'Candidate Scores', 'candidate_scores', true, false);
                    candidateScoresGraph.draw();
+                   
+                   var resumeVFinalGraph = new resume_v_final_graph_class(candidateData, 'resume_v_final', 'Resume Score v Final Score', 'resume_v_final', true, false, true);
+                   resumeVFinalGraph.draw();
 
                 });
             });
@@ -40,14 +44,14 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div class='row'>
-                <div class='col-xs-12 graph_column'>
-                    <div class="graph" id='candidate_scores'></div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-xs-12">
                     <div class="graph" id='resume_v_final'></div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-xs-12 graph_column'>
+                    <div class="graph" id='candidate_scores'></div>
                 </div>
             </div>
         </div>
