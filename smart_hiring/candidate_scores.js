@@ -10,7 +10,6 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
     self.showInterview = true;
     
     graph_class.call(this, the_data, graph_container_id, title_text, slug, min_height, fixed_height, margin);
-    self.visible_data = the_data;
     
     //All controls go in here
     if (self.controls_enabled) {
@@ -160,6 +159,9 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
         
         self.calculateMaxX();
         
+        self.data = self.data.sort(compareTotalScores);
+        self.data.reverse();
+        
         //Standard start
         self.start_draw();
         
@@ -274,6 +276,10 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
             self.max_x += d3.max(self.data, function(d) { return + d['Normalized Interview Score'];});
         }
     };
+    
+    function compareTotalScores(a, b) {
+        return (a['Normalized Resume'] + a['Normalized Interview Score']) - (b['Normalized Resume'] + b['Normalized Interview Score']);
+    }
 }
 candidate_scores_graph_class.prototype = Object.create(graph_class.prototype); // See note below
 candidate_scores_graph_class.prototype.constructor = candidate_scores_graph_class;
