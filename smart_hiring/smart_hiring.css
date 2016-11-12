@@ -1,0 +1,101 @@
+.controls{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.points_table td{
+    padding: 2px!important;    
+    vertical-align: center;
+}
+col.active_data{
+    background-color: #dff0d8;
+}
+line.regression_line{
+    stroke: red;
+}
+.regression_label{
+    color: red;
+    fill: red;
+}
+.Default.Points,
+.Your.Points{
+    text-align: center;
+}
+.different_points{
+    background-color: #f2dede;
+}
+input.your_points{
+    width: 40px;;
+    height: 20px;
+    text-align: center
+}
+.resumeScore
+{
+    fill: #8A0707;
+    stroke: #8A0707;
+}
+.interviewScore
+{
+    fill: #000066;
+    stroke: #000066;
+}
+.excluded{
+    fill: none;
+}
+@media (max-width : 767px) {
+    .group_label{
+        visibility: hidden;
+    }
+}
+@media (min-width: 10px) {
+    .axis text{
+        font-family: 'Arial';
+        font-size: 10px;
+    }
+}
+@media (min-width: 400px) {
+    .axis text{
+        font-family: 'Arial';
+        font-size: 10px;
+    }
+}
+.source_tick{
+    fill: #337ab7;
+}
+.source_tick:hover{
+    fill: #23527c;
+    text-decoration: underline;
+}
+.tick{
+    cursor: pointer;
+}
+.change_button_row{
+    text-align: center;
+    padding-top: 10px;
+}
+.legend.series{
+    stroke-width: 2px;
+}
+.legend_row{
+    text-align: right;
+}
+.visible_false{
+    fill: none!important;
+}
+@media (min-width: 1px) {
+    .legend_button_wrapper{
+        float: left!important;
+    }
+}
+@media (min-width: 550px) {
+    .legend_button_wrapper{
+        float: right!important;
+    }
+}
+.legend_button{
+    background-color: transparent;
+    border: hidden;
+}
+text.ranking_text{
+    stroke: none;
+    font-size: 10px;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+        
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="../vendor/simple-statistics.min.js"></script>
+        
+        
+        <script src="../vendor/d3.v3.min.js"></script>
+        <script src="../vendor/d3-tip.js"></script>
+        <script src="../vendor/moment.js"></script>
+        <script src="../vendor/jquery.color.js"></script>
+        <script src="../vendor/jquery.color.svg-names.js"></script>
+        <script src="../vendor/graphing_functions.js"></script>
+        <link rel="stylesheet" href="../vendor/graph_styles.css">
+        
+        <link rel="stylesheet" href="smart_hiring.css">
+        <script type="text/javascript" src="data.js"></script>
+        <script type="text/javascript" src="candidate_scores.js"></script>
+        <script type="text/javascript">
+            $(window).load(function () {
+
+                $(document).ready(function () {
+                    
+                   var candidateScoresGraph = new candidate_scores_graph_class(candidateData, 'candidate_scores', 'Candidate Scores', 'slug', true, false);
+                   candidateScoresGraph.draw();
+
+                });
+            });
+            
+        </script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class='row'>
+                <div class='col-xs-12 graph_column'>
+                    <div class="graph" id='candidate_scores'></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="graph" id='resume_v_final'></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

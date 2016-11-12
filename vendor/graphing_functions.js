@@ -192,6 +192,16 @@ function add_class(object, class_to_add){
     var new_classes = current + ' ' + class_to_add;
     object.attr('class', new_classes);
 }
+function toggle_class(object, class_to_toggle){
+    var current = object.attr('class').trim();
+    var doesHasClass = current.includes(class_to_toggle);
+    if (doesHasClass){
+        remove_class(object, class_to_toggle);
+    }
+    else{
+        add_class(object, class_to_toggle);
+    }
+}
 
 function order_of_magnitude(n) {
     /*Return the order of magnitude of n*/
