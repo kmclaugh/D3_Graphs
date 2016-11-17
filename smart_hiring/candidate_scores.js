@@ -8,6 +8,7 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
     self.controls_enabled = controls_enabled;
     self.showResume = true;
     self.showInterview = true;
+    self.showFinal = true;
     
     graph_class.call(this, the_data, graph_container_id, title_text, slug, min_height, fixed_height, margin);
     
@@ -24,6 +25,11 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
             else if (dataName == 'interview'){
                 toggle_class($('circle.interviewScore'), 'visible_false');
                 self.showInterview = !self.showInterview;
+                self.updateData();
+            }
+            else if (dataName == 'final'){
+                toggle_class($('circle.finalScore'), 'visible_false');
+                self.showFinal = !self.showFinal;
                 self.updateData();
             }
         });
@@ -48,10 +54,9 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
         //Update the data bars
         self.svg.selectAll("rect.resumeScore")
             .transition()
-            .attr("y", function(d) {return self.yRange(d.Name); })
             .attr("width", function(d){
                 if (self.showResume){
-                    return self.xRange(d['Normalized Resume']);
+                    return self.xRange(d['Normalized Resume Score']);
                 }
                 else{
                     return 0;
@@ -62,7 +67,7 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
             .transition()
             .attr("x", function(d) {
                 if (self.showResume){
-                    return self.xRange(d['Normalized Resume']);
+                    return self.xRange(d['Normalized Resume Score']);
                 }
                 else{
                     return 0;
@@ -77,6 +82,17 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
                 }
             });
         
+        self.svg.selectAll("rect.finalScore")
+            .transition()
+            .attr("width", function(d){
+                if (self.showFinal){
+                    return self.xRange(d['Final Score']);
+                }
+                else{
+                    return 0;
+                }
+            });
+        
     };
     
     self.resize = function(){
@@ -85,7 +101,7 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
         self.start_resize();
         
         //Rescale the range and axis functions to account for the new dimensions
-        self.yRange.rangeBands([0, self.height], 0.15);
+        self.yRange.rangeBands([0, self.height], 0);
         self.xRange.range([0, self.width]);
         self.xAxis.scale(self.xRange).ticks(Math.max(self.width/85, 2));
         self.yAxis.scale(self.yRange);
@@ -108,19 +124,19 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
         
         //Update the data bars
         self.svg.selectAll("rect.resumeScore")
-            .attr("y", function(d) {return self.yRange(d.Name); })
+            .attr("y", function(d) {return self.yRange(d.Name)+self.barMargin; })
             .attr("width", function(d){
                 if (self.showResume){
-                    return self.xRange(d['Normalized Resume']);
+                    return self.xRange(d['Normalized Resume Score']);
                 }
                 else{
                     return 0;
                 }
             })
-            .attr("height", self.yRange.rangeBand());
+            .attr("height", self.yRange.rangeBand()-self.barMargin*2);
         
         self.svg.selectAll("rect.interviewScore")
-            .attr("y", function(d) {return self.yRange(d.Name); })
+            .attr("y", function(d) {return self.yRange(d.Name)+self.barMargin; })
             .attr('width', function(d){
                 if (self.showInterview){
                     return self.xRange(d['Normalized Interview Score']);
@@ -131,28 +147,27 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
             })
             .attr("x", function(d) {
                 if (self.showResume){
-                    return self.xRange(d['Normalized Resume']);
+                    return self.xRange(d['Normalized Resume Score']);
+                }
+                else{
+                    return 0;
+                }
+            })
+            .attr("height", self.yRange.rangeBand()-self.barMargin*2);
+        
+        self.svg.selectAll("rect.finalScore")
+            .attr("y", function(d) {return self.yRange(d.Name); })
+            .attr("width", function(d){
+                if (self.showFinal){
+                    return self.xRange(d['Final Score']);
                 }
                 else{
                     return 0;
                 }
             })
             .attr("height", self.yRange.rangeBand());
-        
-        //Update the numbers
-        self.svg.selectAll(".ranking_text")
-            .attr("y", function(d) {
-                if (self.return_group_visibility(d.Group) == 'visible'){
-                    return self.yRange([d.id, d.Name, d['Source Link']]) + self.yRange.rangeBand();
-                }
-                else{
-                    return self.yRange([d.id, d.Name, d['Source Link']])
-                }
-            })
-            .attr("x", function(d) {return self.xRange(d.experience_points)+15})
-        
     
-    }//end resize
+    };//end resize
 
     self.draw = function(){
         /*Draws the graph according to the size of the graph element*/
@@ -167,7 +182,7 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
         
         //Create y and x ranges
         self.yRange = d3.scale.ordinal()
-            .rangeBands([0, self.height], 0.15)
+            .rangeBands([0, self.height], 0)
             .domain(self.data.map(function(d) {
                 return d.Name;
             })
@@ -217,20 +232,38 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
             .text("Experience Points");
         
         //Add the actual data bars
+        self.final_bars = self.svg_g.selectAll("bar")
+            .data(self.data)
+            .enter().append("rect")
+                .attr("class", 'bar data finalScore')
+                .attr("y", function(d) { return self.yRange(d.Name); })
+                .attr("width", function(d) {
+                    if (d['Final Score'] !== null){
+                        return self.xRange(d['Final Score']);
+                    }
+                    else{
+                        return 0;
+                    }
+                })
+                .attr("x",  0)
+                .attr("height", self.yRange.rangeBand());
+        
+        self.barMargin = 2;//HACKy putting this here
+        
         self.resume_bars = self.svg_g.selectAll("bar")
             .data(self.data)
             .enter().append("rect")
                 .attr("class", 'bar data resumeScore')
-                .attr("y", function(d) { return self.yRange(d.Name); })
-                .attr("width", function(d) {return self.xRange(d['Normalized Resume']);})
+                .attr("y", function(d) { return self.yRange(d.Name)+self.barMargin; })
+                .attr("width", function(d) {return self.xRange(d['Normalized Resume Score']);})
                 .attr("x", 0)
-                .attr("height", self.yRange.rangeBand());
+                .attr("height", self.yRange.rangeBand()-self.barMargin*2);
         
         self.interview_bars = self.svg_g.selectAll("bar")
             .data(self.data)
             .enter().append("rect")
                 .attr("class", 'bar data interviewScore')
-                .attr("y", function(d) { return self.yRange(d.Name); })
+                .attr("y", function(d) { return self.yRange(d.Name)+self.barMargin; })
                 .attr("width", function(d) {
                     if (d['Normalized Interview Score'] !== null){
                         return self.xRange(d['Normalized Interview Score']);
@@ -239,8 +272,8 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
                         return 0;
                     }
                 })
-                .attr("x",  function(d) {return self.xRange(d['Normalized Resume']);})
-                .attr("height", self.yRange.rangeBand());
+                .attr("x",  function(d) {return self.xRange(d['Normalized Resume Score']);})
+                .attr("height", self.yRange.rangeBand()-self.barMargin*2);
 
         //Create Graph legend
         self.graph_element.prepend('<div class="row legend_row" id=legend_row_'+self.graph_container_id+'>');
@@ -249,6 +282,10 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
         self.scale_col = $('#scale_col_'+self.graph_container_id);
         self.legend_row.append('<div class="col-xs-12 col-sm-10" id=legend_col_'+self.graph_container_id+'></div>');
         self.legend_col = $('#legend_col_'+self.graph_container_id);
+        
+        //Final score
+        legend_element = '<button ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Candidate Scores Graph" class="legend_button '+self.graph_container_id+'" data_name="final"><svg width="15" height="14" style="vertical-align: middle"><circle class="legend series visible_true finalScore" data_name="final" r="5" cx="6" cy="7"></circle></svg>Final Score</button>';
+        self.legend_col.append('<div class="legend_button_wrapper">'+legend_element+'</div>');
         
         //Interview score
         var legend_element = '<button ga-event="true" ga-category="Visualizations" ga-action="Interaction" ga-label="Candidate Scores Graph" class="legend_button '+self.graph_container_id+'" data_name="interview"><svg width="15" height="14" style="vertical-align: middle"><circle class="legend series visible_true interviewScore" data_name="interview" r="5" cx="6" cy="7"></circle></svg>Interview Score</button>';
@@ -269,16 +306,23 @@ function candidate_scores_graph_class(the_data, graph_container_id, title_text, 
     /********Reusable functions**************/
     self.calculateMaxX = function(){
         self.max_x = 0;
-        if (self.showResume){
-            self.max_x += d3.max(self.data, function(d) { return + d['Normalized Resume'];});
+        if (self.showFinal){
+            self.max_x = d3.max(self.data, function(d) { return + d['Final Score'];});
         }
-        if (self.showInterview){
-            self.max_x += d3.max(self.data, function(d) { return + d['Normalized Interview Score'];});
+        else{
+            if (self.showResume){
+                self.max_x += d3.max(self.data, function(d) { return + d['Normalized Resume Score'];});
+            }
+            if (self.showInterview){
+                self.max_x += d3.max(self.data, function(d) { return + d['Normalized Interview Score'];});
+            }
         }
+        
+        
     };
     
     function compareTotalScores(a, b) {
-        return (a['Normalized Resume'] + a['Normalized Interview Score']) - (b['Normalized Resume'] + b['Normalized Interview Score']);
+        return (a['Normalized Resume Score'] + a['Normalized Interview Score']) - (b['Normalized Resume Score'] + b['Normalized Interview Score']);
     }
 }
 candidate_scores_graph_class.prototype = Object.create(graph_class.prototype); // See note below

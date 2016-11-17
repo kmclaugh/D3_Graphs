@@ -41,7 +41,7 @@ function resume_v_final_graph_class(the_data, graph_container_id, title_text, sl
         //Update points
         self.svg.selectAll("circle")
             .attr("cx", function(d) {
-                return self.xRange(d['Normalized Resume']);
+                return self.xRange(d['Normalized Resume Score']);
             })
             .attr("cy", function(d) {
                  return self.yRange(d['Final Score']); 
@@ -135,7 +135,7 @@ function resume_v_final_graph_class(the_data, graph_container_id, title_text, sl
                 .attr('r', '5')
                 .on('mouseover', function(d){self.show_tip(d, this);})
                 .on("mouseout", function(d){self.hide_tip(d, this);})
-                .attr("cx", function(d) {return self.xRange(d['Normalized Resume']);})
+                .attr("cx", function(d) {return self.xRange(d['Normalized Resume Score']);})
                 .attr("cy", function(d) { return self.yRange(d['Final Score']); });
         
         //Add the linear regression line
@@ -213,7 +213,7 @@ function resume_v_final_graph_class(the_data, graph_container_id, title_text, sl
                 html_string += '<span class="tip_title">'+d.Name+'</span></br>';
                 //Points
                 html_string += '<table>';
-                html_string += '<tr><td class="text-left">Resume Score: </td><td style="padding-left:5px">'+Math.round(d['Normalized Resume'])+'</td></tr>';
+                html_string += '<tr><td class="text-left">Resume Score: </td><td style="padding-left:5px">'+Math.round(d['Normalized Resume Score'])+'</td></tr>';
                 html_string += '<tr><td class="text-left">Interview Score: </td><td style="padding-left:5px">'+Math.round(d['Normalized Interview Score'])+'</td></tr>';
                 html_string += '<tr><td class="text-left">Final Score: </td><td style="padding-left:5px">'+Math.round(d['Final Score'])+'</td></tr>';
                 html_string += "</table></div>";
@@ -247,7 +247,7 @@ function resume_v_final_graph_class(the_data, graph_container_id, title_text, sl
     self.calculate_cutoff_value = function(){
         /*Calculates the cutoff value assuming we're hiring 3 candidates and the data array is sorted highest to lowest*/
         if (self.data.length > 2){
-            self.cutoff_value = self.data[2]['Normalized Resume'];
+            self.cutoff_value = self.data[2]['Normalized Resume Score'];
             self.cutoff_value = 0.95*self.cutoff_value;
         }
         else{
@@ -260,7 +260,7 @@ function resume_v_final_graph_class(the_data, graph_container_id, title_text, sl
         /*Calculates the values necessary to create the linear regression line*/
         
         //Create the x y pairs
-        var x_y = self.data.map(function (d) { return [d['Normalized Resume'],d['Final Score']]; });
+        var x_y = self.data.map(function (d) { return [d['Normalized Resume Score'],d['Final Score']]; });
         //Calculate regression value
         var regression = ss.linearRegression(x_y);
         var regressionLine = ss.linearRegressionLine(regression);
@@ -276,12 +276,12 @@ function resume_v_final_graph_class(the_data, graph_container_id, title_text, sl
     
     self.calculateMaxX = function(){
         /*Calculates the maximum x value based on the real final and predicted final scores*/
-        self.max_x = d3.max(self.data, function(d) { return + d['Normalized Resume'];});
+        self.max_x = d3.max(self.data, function(d) { return + d['Normalized Resume Score'];});
     };
     
     self.calculateMinX = function(){
         /*Calculates the minimum x value based on the real final and predicted final scores*/
-        self.min_x = d3.min(self.data, function(d) { return + d['Normalized Resume'];});
+        self.min_x = d3.min(self.data, function(d) { return + d['Normalized Resume Score'];});
     };
     
     self.calculateMaxY = function(){
@@ -289,7 +289,7 @@ function resume_v_final_graph_class(the_data, graph_container_id, title_text, sl
         self.max_y = d3.max(self.data, function(d) { return + d['Final Score'];});
     };
     
-    self.y_label_format = function(d, tooltip){
+    self.y_label_format = function(d){
         /*Returns the y label. Used for both y-axis tick labels and the tooltip title. Little HACKy*/
         var label_string = d[1];
         

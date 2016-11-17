@@ -1,254 +1,272 @@
 var candidateData = [
   {
-    "Name": "Lincoln",
-    "Resume Points": 500,
-    "Interview Points": 11,
-    "Normalized Interview Score": 8.461538462,
-    "Normalized Resume": 57.47126437,
-    "Final Score": 94.66843501,
+    "Name": "George",
+    "Normalized Interview Score": 109.1666667,
+    "Normalized Resume Score": 71.95121951,
+    "Final Score": 191.9011882,
+    "Resume Score": 632.5,
+    "Interview Score": 87.83333333,
     "Predicted Final Score": null
   },
   {
-    "Name": "Daniel",
-    "Resume Points": 560,
-    "Interview Points": 31.5,
-    "Normalized Interview Score": 24.23076923,
-    "Normalized Resume": 64.36781609,
-    "Final Score": 120.7824934,
+    "Name": "Winston",
+    "Normalized Interview Score": 81.16666667,
+    "Normalized Resume Score": 67.37804878,
+    "Final Score": 163.5029706,
+    "Resume Score": 552.5,
+    "Interview Score": 81.16666667,
     "Predicted Final Score": null
   },
   {
-    "Name": "Vickey",
-    "Resume Points": 517.5,
-    "Interview Points": 41.16666667,
-    "Normalized Interview Score": 31.66666667,
-    "Normalized Resume": 59.48275862,
-    "Final Score": 120.8908046,
+    "Name": "Chrsitine",
+    "Normalized Interview Score": 78.16666667,
+    "Normalized Resume Score": 80.18292683,
+    "Final Score": 180.4025954,
+    "Resume Score": 657.5,
+    "Interview Score": 78.16666667,
     "Predicted Final Score": null
   },
   {
-    "Name": "Gregg",
-    "Resume Points": 450,
-    "Interview Points": 57.83333333,
-    "Normalized Interview Score": 44.48717949,
-    "Normalized Resume": 51.72413793,
-    "Final Score": 122.0733864,
+    "Name": "Caroline",
+    "Normalized Interview Score": 72,
+    "Normalized Resume Score": 72.86585366,
+    "Final Score": 164.6833959,
+    "Resume Score": 597.5,
+    "Interview Score": 72,
     "Predicted Final Score": null
   },
   {
     "Name": "Sigmond",
-    "Resume Points": 502.5,
-    "Interview Points": 59.33333333,
-    "Normalized Interview Score": 45.64102564,
-    "Normalized Resume": 57.75862069,
-    "Final Score": 132.2789567,
+    "Normalized Interview Score": 62.66666667,
+    "Normalized Resume Score": 60.67073171,
+    "Final Score": 139.2112258,
+    "Resume Score": 492.5,
+    "Interview Score": 68,
     "Predicted Final Score": null
   },
   {
-    "Name": "Adeline",
-    "Resume Points": 547.5,
-    "Interview Points": 62.66666667,
-    "Normalized Interview Score": 48.20512821,
-    "Normalized Resume": 62.93103448,
-    "Final Score": 142.6016799,
-    "Predicted Final Score": null
-  },
-  {
-    "Name": "Sandra",
-    "Resume Points": 542.5,
-    "Interview Points": 68,
-    "Normalized Interview Score": 52.30769231,
-    "Normalized Resume": 62.35632184,
-    "Final Score": 145.8421751,
-    "Predicted Final Score": null
-  },
-  {
-    "Name": "Carl",
-    "Resume Points": 602.5,
-    "Interview Points": 81.16666667,
-    "Normalized Interview Score": 62.43589744,
-    "Normalized Resume": 69.25287356,
-    "Final Score": 166.3152078,
-    "Predicted Final Score": null
-  },
-  {
-    "Name": "Ivan",
-    "Resume Points": 617.5,
-    "Interview Points": 78.16666667,
-    "Normalized Interview Score": 60.12820513,
-    "Normalized Resume": 70.97701149,
-    "Final Score": 166.5937224,
-    "Predicted Final Score": null
-  },
-  {
-    "Name": "Kathryn",
-    "Resume Points": 647.5,
-    "Interview Points": 72,
-    "Normalized Interview Score": 55.38461538,
-    "Normalized Resume": 74.42528736,
-    "Final Score": 167.0225464,
+    "Name": "James",
+    "Normalized Interview Score": 59.33333333,
+    "Normalized Resume Score": 55.18292683,
+    "Final Score": 128.4154159,
+    "Resume Score": 497.5,
+    "Interview Score": 62.66666667,
     "Predicted Final Score": null
   },
   {
     "Name": "Brad",
-    "Resume Points": 682.5,
-    "Interview Points": 87.83333333,
-    "Normalized Interview Score": 67.56410256,
-    "Normalized Resume": 78.44827586,
-    "Final Score": 185.2365164,
+    "Normalized Interview Score": 57.83333333,
+    "Normalized Resume Score": 48.7804878,
+    "Final Score": 117.6579112,
+    "Resume Score": 452.5,
+    "Interview Score": 59.33333333,
     "Predicted Final Score": null
   },
   {
-    "Name": "Jerrie",
-    "Resume Points": 480,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 55.17241379,
-    "Final Score": null,
-    "Predicted Final Score": 115.2439274
-  },
-  {
-    "Name": "Arletta",
-    "Resume Points": 537.5,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 61.7816092,
-    "Final Score": null,
-    "Predicted Final Score": 134.407755
-  },
-  {
-    "Name": "Porter",
-    "Resume Points": 510,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 58.62068966,
-    "Final Score": null,
-    "Predicted Final Score": 125.2424462
-  },
-  {
-    "Name": "Nate",
-    "Resume Points": 400,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 45.97701149,
-    "Final Score": null,
-    "Predicted Final Score": 88.58121081
-  },
-  {
-    "Name": "Karrin",
-    "Resume Points": 552.5,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 63.50574713,
-    "Final Score": null,
-    "Predicted Final Score": 139.4070144
-  },
-  {
-    "Name": "Caroline",
-    "Resume Points": 475,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 54.59770115,
-    "Final Score": null,
-    "Predicted Final Score": 113.5775076
-  },
-  {
-    "Name": "Randal",
-    "Resume Points": 675,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 77.5862069,
-    "Final Score": null,
-    "Predicted Final Score": 180.2342992
-  },
-  {
-    "Name": "Richard",
-    "Resume Points": 432.5,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 49.71264368,
-    "Final Score": null,
-    "Predicted Final Score": 99.41293944
+    "Name": "Mary",
+    "Normalized Interview Score": 46.66666667,
+    "Normalized Resume Score": 60.06097561,
+    "Final Score": 125.9888993,
+    "Resume Score": 400,
+    "Interview Score": 57.83333333,
+    "Predicted Final Score": null
   },
   {
     "Name": "Stacy",
-    "Resume Points": 530,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 60.91954023,
-    "Final Score": null,
-    "Predicted Final Score": 131.9081253
+    "Normalized Interview Score": 41.16666667,
+    "Normalized Resume Score": 57.01219512,
+    "Final Score": 117.1849593,
+    "Resume Score": 467.5,
+    "Interview Score": 41.16666667,
+    "Predicted Final Score": null
   },
   {
-    "Name": "Eric",
-    "Resume Points": 515,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 59.1954023,
-    "Final Score": null,
-    "Predicted Final Score": 126.9088659
-  },
-  {
-    "Name": "Winston",
-    "Resume Points": 472.5,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 54.31034483,
-    "Final Score": null,
-    "Predicted Final Score": 112.7442977
-  },
-  {
-    "Name": "James",
-    "Resume Points": 475,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 54.59770115,
-    "Final Score": null,
-    "Predicted Final Score": 113.5775076
-  },
-  {
-    "Name": "Rachael",
-    "Resume Points": 537.5,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 61.7816092,
-    "Final Score": null,
-    "Predicted Final Score": 134.407755
-  },
-  {
-    "Name": "John",
-    "Resume Points": 495,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 56.89655172,
-    "Final Score": null,
-    "Predicted Final Score": 120.2431868
-  },
-  {
-    "Name": "Matt",
-    "Resume Points": 577.5,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 66.37931034,
-    "Final Score": null,
-    "Predicted Final Score": 147.7391133
-  },
-  {
-    "Name": "Chrsitine",
-    "Resume Points": 535,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 61.49425287,
-    "Final Score": null,
-    "Predicted Final Score": 133.5745451
+    "Name": "Randal",
+    "Normalized Interview Score": 31.5,
+    "Normalized Resume Score": 62.19512195,
+    "Final Score": 117.5234522,
+    "Resume Score": 510,
+    "Interview Score": 31.5,
+    "Predicted Final Score": null
   },
   {
     "Name": "William",
-    "Resume Points": 615,
-    "Interview Points": 0,
-    "Normalized Interview Score": null,
-    "Normalized Resume": 70.68965517,
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 67.68292683,
     "Final Score": null,
-    "Predicted Final Score": 160.2372617
+    "Resume Score": 555,
+    "Interview Score": 0,
+    "Predicted Final Score": 153.7508518
+  },
+  {
+    "Name": "Vickey",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 76.2195122,
+    "Final Score": null,
+    "Resume Score": 625,
+    "Interview Score": 0,
+    "Predicted Final Score": 173.8486036
+  },
+  {
+    "Name": "Simone",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 77.13414634,
+    "Final Score": null,
+    "Resume Score": 632.5,
+    "Interview Score": 0,
+    "Predicted Final Score": 176.0019341
+  },
+  {
+    "Name": "Sandra",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 62.19512195,
+    "Final Score": null,
+    "Resume Score": 510,
+    "Interview Score": 0,
+    "Predicted Final Score": 140.8308686
+  },
+  {
+    "Name": "Richard",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 51.52439024,
+    "Final Score": null,
+    "Resume Score": 422.5,
+    "Interview Score": 0,
+    "Predicted Final Score": 115.7086789
+  },
+  {
+    "Name": "Rachael",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 61.2804878,
+    "Final Score": null,
+    "Resume Score": 502.5,
+    "Interview Score": 0,
+    "Predicted Final Score": 138.677538
+  },
+  {
+    "Name": "Porter",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 59.14634146,
+    "Final Score": null,
+    "Resume Score": 485,
+    "Interview Score": 0,
+    "Predicted Final Score": 133.6531001
+  },
+  {
+    "Name": "Nate",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 58.53658537,
+    "Final Score": null,
+    "Resume Score": 480,
+    "Interview Score": 0,
+    "Predicted Final Score": 132.2175464
+  },
+  {
+    "Name": "Matt",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 12.19512195,
+    "Final Score": null,
+    "Resume Score": 100,
+    "Interview Score": 0,
+    "Predicted Final Score": 23.11546557
+  },
+  {
+    "Name": "Lincoln",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 40.54878049,
+    "Final Score": null,
+    "Resume Score": 332.5,
+    "Interview Score": 0,
+    "Predicted Final Score": 89.8687124
+  },
+  {
+    "Name": "Kathryn",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 56.70731707,
+    "Final Score": null,
+    "Resume Score": 465,
+    "Interview Score": 0,
+    "Predicted Final Score": 127.9108853
+  },
+  {
+    "Name": "Karrin",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 64.32926829,
+    "Final Score": null,
+    "Resume Score": 527.5,
+    "Interview Score": 0,
+    "Predicted Final Score": 145.8553065
+  },
+  {
+    "Name": "John",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 68.90243902,
+    "Final Score": null,
+    "Resume Score": 565,
+    "Interview Score": 0,
+    "Predicted Final Score": 156.6219592
+  },
+  {
+    "Name": "Jimmy",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 54.87804878,
+    "Final Score": null,
+    "Resume Score": 475,
+    "Interview Score": 0,
+    "Predicted Final Score": 130.7819927
+  },
+  {
+    "Name": "Jerrie",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 54.87804878,
+    "Final Score": null,
+    "Resume Score": 450,
+    "Interview Score": 0,
+    "Predicted Final Score": 123.6042242
+  },
+  {
+    "Name": "Ivan",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 57.92682927,
+    "Final Score": null,
+    "Resume Score": 475,
+    "Interview Score": 0,
+    "Predicted Final Score": 130.7819927
+  },
+  {
+    "Name": "Eric",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 59.45121951,
+    "Final Score": null,
+    "Resume Score": 487.5,
+    "Interview Score": 0,
+    "Predicted Final Score": 134.3708769
+  },
+  {
+    "Name": "Carl",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 48.7804878,
+    "Final Score": null,
+    "Resume Score": 480,
+    "Interview Score": 0,
+    "Predicted Final Score": 132.2175464
+  },
+  {
+    "Name": "Arletta",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 54.26829268,
+    "Final Score": null,
+    "Resume Score": 400,
+    "Interview Score": 0,
+    "Predicted Final Score": 109.2486873
+  },
+  {
+    "Name": "Adeline",
+    "Normalized Interview Score": 0,
+    "Normalized Resume Score": 59.45121951,
+    "Final Score": null,
+    "Resume Score": 445,
+    "Interview Score": 0,
+    "Predicted Final Score": 122.1686705
   }
-];
+]
